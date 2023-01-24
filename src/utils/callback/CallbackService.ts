@@ -1,5 +1,6 @@
 import * as Flex from "@twilio/flex-ui";
 import ApiService from "../serverless/ApiService";
+import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../ErrorManager";
 import { EncodedParams } from "../../types/serverless";
 import { TaskAttributes } from "../../types/task-router/Task";
 import { CallbackNotification } from "../../flex-hooks/notifications/Callback";
@@ -96,7 +97,12 @@ class CallbackService extends ApiService {
               customer: task.defaultFrom,
             }
           );
-          throw e;
+          throw ErrorManager.createAndProcessError("Could not create callback to customer", {
+            type: FlexPluginErrorType.serverless,
+            description: e instanceof Error ? `${e.message}` : "Could not create callback to customer",
+            context: "Plugin.CallbackService",
+            wrappedError: e
+        });
         }
       }
     }
@@ -132,8 +138,13 @@ class CallbackService extends ApiService {
       if (response.success) {
         await Flex.Actions.invokeAction("WrapupTask", { task });
       }
-    } catch (error) {
-      console.log("Unable to requeue callback", error);
+    } catch (e) {
+      throw ErrorManager.createAndProcessError("Could not reque callback to customer", {
+        type: FlexPluginErrorType.serverless,
+        description: e instanceof Error ? `${e.message}` : "Could not reque callback to customer",
+        context: "Plugin.CallbackService",
+        wrappedError: e
+    });
     }
 
     return task;
@@ -142,6 +153,7 @@ class CallbackService extends ApiService {
   #createCallback = async (
     request: CreateCallbackRequest
   ): Promise<CreateCallbackResponse> => {
+
     const encodedParams: EncodedParams = {
       Token: encodeURIComponent(this.manager.user.token),
       numberToCall: encodeURIComponent(request.numberToCall),
@@ -185,7 +197,7 @@ class CallbackService extends ApiService {
         : undefined,
     };
 
-    const response = await this.fetchJsonWithReject<CreateCallbackResponse>(
+      const response = await this.fetchJsonWithReject<CreateCallbackResponse>(
       `${this.serverlessProtocol}://${this.serverlessDomain}/callback/flex/create-callback`,
       {
         method: "post",
@@ -193,7 +205,6 @@ class CallbackService extends ApiService {
         body: this.buildBody(encodedParams),
       }
     );
-
     return response;
   };
 }

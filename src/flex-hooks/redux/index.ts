@@ -8,6 +8,5 @@ export default (flex: typeof Flex, manager: Flex.Manager) => {
     return;
   }
 
-  console.log("reduxNamespace",reduxNamespace)
   manager.store.addReducer(reduxNamespace, CallbackAndVoicemailReducer);
 };
