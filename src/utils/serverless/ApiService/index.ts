@@ -20,7 +20,6 @@ export default abstract class ApiService {
     this.serverlessProtocol = "https";
     this.serverlessDomain = "";
 
-    console.log(process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN);
     if (process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
       this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
 

@@ -1,9 +1,15 @@
 import { ITask, useFlexSelector, Manager } from '@twilio/flex-ui';
+import { Button } from "@twilio-paste/core/button";
+import { Box } from "@twilio-paste/core/box";
+import { Heading } from "@twilio-paste/core/heading";
+import { Text } from "@twilio-paste/core/text";
+import { Flex as Flex } from "@twilio-paste/core";
+import { InformationIcon } from "@twilio-paste/icons/cjs/InformationIcon";
+
 import React from 'react';
 import { DateTime } from 'luxon';
 import { TaskAttributes } from 'types/task-router/Task';
-import { Button, Box, Heading, Text, Flex as Flex } from "@twilio-paste/core";
-import { InformationIcon } from "@twilio-paste/icons/esm/InformationIcon";
+
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState, reduxNamespace } from '../../flex-hooks/states'
 import { Actions } from "../../flex-hooks/states/"
@@ -36,7 +42,7 @@ export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: Callba
     timeReceived = DateTime.fromISO(callBackData?.utcDateTimeReceived);
   } else {
     timeReceived = DateTime.utc();
-  }``
+  }
   
   const formatOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' } as Intl.DateTimeFormatOptions;
   
@@ -111,6 +117,7 @@ export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: Callba
           disabled={disableCallCustomerButton}
           variant="primary"
           onClick={() => dispatch(Actions.callCustomer(task))}
+          data-testid="callbackBtn"
         >
             Place Call Now To {callBackData?.numberToCall}
         </Button>
@@ -123,6 +130,7 @@ export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: Callba
             disabled={disableRetryButton}
             variant="secondary"
             onClick={async () => dispatch(Actions.requeueCallback(task))}
+            data-testid="retryBtn"
           >
             Retry Later
           </Button>

@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "start": "twilio flex:plugins:start",
+    "test": "jest",
     "postinstall": "flex-plugin pre-script-check"
   },
   "dependencies": {
@@ -19,14 +21,17 @@
     "tzdata": "^1.0.35"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "12.1.5",
+    "@testing-library/user-event": "14.4.3",
     "@twilio/flex-ui": "2.0.2",
-    "@types/react-redux": "^7.1.1",
     "@types/luxon": "^3.1.0",
-    "react-test-renderer": "17.0.2",
-    "typescript": "^4",
+    "@types/react-redux": "^7.1.1",
     "jest": "^26.0.20",
     "jest-fetch-mock": "3.0.3",
-    "jest-junit": "12.0.0"
+    "jest-junit": "12.0.0",
+    "react-test-renderer": "17.0.2",
+    "typescript": "^4"
   },
   "jest": {
     "rootDir": ".",

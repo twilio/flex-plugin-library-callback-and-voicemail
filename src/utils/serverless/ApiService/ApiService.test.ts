@@ -1,7 +1,7 @@
 import * as Flex from '@twilio/flex-ui';
 import ApiService from './';
 import { EncodedParams } from '../../../types/serverless';
-import { UIAttributes } from '../../../types/manager/ServiceConfiguration';
+import { UIAttributes } from '../../../types/ServiceConfiguration';
 
 // NOTE: Make dummy class to extend ApiService because it's abstract
 class Test extends ApiService {
