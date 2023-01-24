@@ -26,7 +26,6 @@ export default class CallbackAndVoicemailPlugin extends FlexPlugin {
    */
   async init(flex: typeof Flex, manager: Flex.Manager): Promise<void> {
 
-    console.log('asdas');
     const initializers = [
       ConfigureFlexStrings,
       CustomizePasteElements,
