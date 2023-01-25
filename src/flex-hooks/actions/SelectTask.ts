@@ -1,5 +1,6 @@
 import * as Flex from "@twilio/flex-ui";
 import { AppState, reduxNamespace } from "../states";
+import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../../utils/ErrorManager";
 import { isAutoSelectTaskEnabled } from '../../utils/Configuration';
 
 export interface EventPayload {
@@ -13,7 +14,9 @@ export const autoSelectCallbackTaskWhenEndingCall = async (
   manager: Flex.Manager
 ) => {
 
-  if (!isAutoSelectTaskEnabled()) return;
+  try {
+
+    if (!isAutoSelectTaskEnabled()) return;
 
   flex.Actions.addListener(
     "beforeSelectTask",
@@ -45,4 +48,14 @@ export const autoSelectCallbackTaskWhenEndingCall = async (
       });
     }
   );
+
+  } catch (e) {
+    throw ErrorManager.createAndProcessError("Could not add 'beforeSelectTask' listener", {
+      type: FlexPluginErrorType.action,
+      description: e instanceof Error ? `${e.message}` : "Could not add 'beforeSelectTask' listener",
+      context: "Plugin.Action.beforeSelectTask",
+      wrappedError: e
+  });
+  }
+  
 };

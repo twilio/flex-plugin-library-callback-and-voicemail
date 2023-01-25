@@ -1,5 +1,4 @@
 import * as Flex from '@twilio/flex-ui';
-import { Action as ReduxAction, combineReducers } from "redux";
 import { CallbackAndVoicemailState, INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK, Action } from './types';
 import initialState from './initialState';
 
@@ -69,17 +68,4 @@ export function callbackandvoicemail(state = initialState, action: Action): Call
   }
 };
 
-// console.log(reduxNamespace);
-// console.log({ [reduxNamespace]: callbackandvoicemail });
-// export interface Action extends ReduxAction {
-//   payload?: any;
-// }
-
-// // Register all component states under the namespace
-// export interface AppState {
-//   flex: Flex.AppState;
-//   [reduxNamespace]: CallbackAndVoicemailState;
-// }
-
-// Combine the reducers
 export default callbackandvoicemail;
