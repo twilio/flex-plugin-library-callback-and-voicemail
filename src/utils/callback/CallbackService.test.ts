@@ -3,18 +3,19 @@ import { CallbackNotification } from "../../flex-hooks/notifications/Callback";
 import * as Flex from "@twilio/flex-ui";
 import { setServiceConfiguration } from '../../../test-utils/flex-service-configuration';
 import { Actions } from "../../flex-hooks/states/";
+import fetch from 'jest-fetch-mock';
 
 const mockTask = {
     sid: "WRxxx",
-    taskSid:"WTxxx",
+    taskSid: "WTxxx",
     queueSid: "WQxxx",
     attributes: {
         callBackData: {
             numberToCall: "+111",
-            numberToCallFrom:"+122"
+            numberToCallFrom: "+122"
         },
     }
-}
+};
 
 describe('callCustomerBack', () => {
     it('shows notification if outbound calling is not enabled', () => {
@@ -23,7 +24,7 @@ describe('callCustomerBack', () => {
         expect(notificationSpy).toHaveBeenCalledWith(CallbackNotification.OutboundDialingNotEnabled);
     });
 
-    it('starts outbound call', () => {
+    it('starts outbound call', async () => {
         setServiceConfiguration({
             outbound_call_flows: {
                 default: {
@@ -37,7 +38,7 @@ describe('callCustomerBack', () => {
         });
         
         const actionSpy = jest.spyOn(Actions, 'setLastPlacedCallback');
-        CallbackService.callCustomerBack(mockTask, 1);
+        await CallbackService.callCustomerBack(mockTask, 1);
         expect(actionSpy).toHaveBeenCalledTimes(1);
         const outboundCallSpy = jest.spyOn(Flex.Actions, 'invokeAction');
         expect(outboundCallSpy).toHaveBeenCalledWith("StartOutboundCall", {
@@ -92,4 +93,50 @@ describe('callCustomerBack', () => {
             expect(callCustomerSpy).toHaveBeenCalledTimes(5);
         });
     });
+});
+
+describe('requeueCallback', () => {
+    const mockTask = {
+        attributes: {
+            callBackData: {
+                numberToCall: "+111",
+                numberToCallFrom: "+122",
+                attempts: 0,
+                utcDateTimeReceived: "2023-01-24T12:43:30.865Z",
+                recordingSid: "REb8351f9697eb9f29341a8353dd6c52b0",
+                recordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACxxx/Recordings/RExxx",
+                isDeleted: false
+            },
+            flow_execution_sid: "FWxxx",
+            message: null
+        },
+        workflowSid: "WKxxx",
+        timeout: 86400,
+        priority: 0,
+        taskSid: "WTxxx"
+    }
+    
+    it('creates a callback', async () => {
+        const createCallbackSpy = jest.spyOn(CallbackService, 'createCallback').mockImplementation(() => 'mock response');
+        await CallbackService.requeueCallback(mockTask);
+        expect(createCallbackSpy).toHaveBeenCalled();
+        jest.restoreAllMocks();
+    });
+
+    it('invokes WrapupTask action on successful callback creation', async () => {
+        const createCallbackSpy = jest.spyOn(CallbackService, 'createCallback').mockImplementation(() => ({ 'success':true }));
+        const actionSpy = jest.spyOn(Flex.Actions, 'invokeAction');
+        await CallbackService.requeueCallback(mockTask);
+        expect(actionSpy).toHaveBeenCalledWith('WrapupTask', { task: mockTask });
+        jest.restoreAllMocks();
+
+    });
+});
+
+describe('createCallback', () => {
+    it('calls serverless function to create callback', async () => {
+        fetch.mockResponseOnce(JSON.stringify({ data: 'mock response' }));
+        const response = await CallbackService.createCallback({});
+        expect(response).toEqual({ data: 'mock response' });
+    })
 });

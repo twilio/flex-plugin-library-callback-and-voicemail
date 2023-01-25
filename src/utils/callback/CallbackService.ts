@@ -127,7 +127,7 @@ class CallbackService extends ApiService {
         isDeleted: task.attributes.callBackData.isDeleted,
       };
 
-      let response = await this.#createCallback(request);
+      let response = await this.createCallback(request);
 
       if (response.success) {
         await Flex.Actions.invokeAction("WrapupTask", { task });
@@ -139,9 +139,9 @@ class CallbackService extends ApiService {
     return task;
   }
 
-  #createCallback = async (
+  async createCallback(
     request: CreateCallbackRequest
-  ): Promise<CreateCallbackResponse> => {
+  ): Promise<CreateCallbackResponse>{
     const encodedParams: EncodedParams = {
       Token: encodeURIComponent(this.manager.user.token),
       numberToCall: encodeURIComponent(request.numberToCall),
