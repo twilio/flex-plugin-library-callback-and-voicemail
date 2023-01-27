@@ -44,7 +44,6 @@ describe('SelectTask', () => {
   });
 
   it('invokes beforeSelectTask listener', async () => {
-    // const actionSpy = jest.spyOn(flex.Actions, 'invokeAction');
     isAutoSelectTaskEnabled.mockReturnValue(true);
     setFlexReduxState({
       view: {
