@@ -1,0 +1,94 @@
+import { isAutoSelectTaskEnabled } from '../../utils/Configuration';
+import * as Flex from "@twilio/flex-ui";
+import { autoSelectCallbackTaskWhenEndingCall } from './SelectTask';
+import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../../utils/ErrorManager";
+import { setFlexReduxState, setCustomReduxState } from '../../../test-utils/flex-redux';
+        
+jest.mock('../../utils/Configuration', () => {
+  const originalModule = jest.requireActual('../../utils/Configuration');
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    isAutoSelectTaskEnabled: jest.fn(),
+  };
+});
+
+describe('SelectTask', () => {
+  
+
+  let flex: typeof Flex = Flex;
+  let manager: Flex.Manager = Flex.Manager.getInstance();
+  const actionSpy = jest.spyOn(flex.Actions, 'invokeAction');
+  
+  it('does not add listener if auto select task is not enabled', async () => {
+      isAutoSelectTaskEnabled.mockReturnValue(false);
+      const listenerSpy = jest.spyOn(Flex.Actions, 'addListener');
+      await autoSelectCallbackTaskWhenEndingCall(flex, manager);
+      expect(listenerSpy).not.toHaveBeenCalled();
+  });
+
+  it('adds beforeSelectTask listener if auto select task is enabled', async () => {
+      isAutoSelectTaskEnabled.mockReturnValue(true);
+      const listenerSpy = jest.spyOn(Flex.Actions, 'addListener');
+      await autoSelectCallbackTaskWhenEndingCall(flex, manager);
+      expect(listenerSpy).toHaveBeenCalled();
+  });
+
+  it('throws error using ErrorManager', async () => {
+    const errorManagerSpy = jest.spyOn(ErrorManager, 'createAndProcessError');
+    
+    await autoSelectCallbackTaskWhenEndingCall().catch((err) => {
+      expect(errorManagerSpy).toHaveBeenCalled();
+      });
+  });
+
+  it('invokes beforeSelectTask listener', async () => {
+    // const actionSpy = jest.spyOn(flex.Actions, 'invokeAction');
+    isAutoSelectTaskEnabled.mockReturnValue(true);
+    setFlexReduxState({
+      view: {
+        selectedTaskSid: "1234"
+      },
+      worker: {
+        tasks: new Map().set("WR123",{sid:"IT123"})
+      }
+    });
+    setCustomReduxState(
+      { lastPlacedReservationSid: "WR123" }
+    );
+    const listenerSpy = jest.spyOn(Flex.Actions, 'addListener');
+    await autoSelectCallbackTaskWhenEndingCall(flex, manager);
+    expect(listenerSpy).toHaveBeenCalled();
+    flex.Actions.invokeAction('SelectTask',{});
+    expect(actionSpy).toBeCalledWith("SelectTask", {
+      sid: "WR123",
+    });
+    actionSpy.mockRestore();
+  });
+
+  it('does not invoke beforeSelectTask listener if task being selected is not null', async () => {
+    isAutoSelectTaskEnabled.mockReturnValue(true);
+    const listenerSpy = jest.spyOn(Flex.Actions, 'addListener');
+    await autoSelectCallbackTaskWhenEndingCall(flex, manager);
+    expect(listenerSpy).toHaveBeenCalled();
+    flex.Actions.invokeAction('SelectTask', { sid: "123" });
+    expect(actionSpy).toHaveBeenCalledTimes(1);
+    expect(actionSpy).not.toBeCalledWith("SelectTask", {
+      sid: "WR123",
+    });
+    actionSpy.mockRestore();
+  });
+
+  it('does not invoke beforeSelectTask listener if no task was selected before event', async () => {
+    isAutoSelectTaskEnabled.mockReturnValue(true);
+    const listenerSpy = jest.spyOn(Flex.Actions, 'addListener');
+    await autoSelectCallbackTaskWhenEndingCall(flex, manager);
+    expect(listenerSpy).toHaveBeenCalled();
+    flex.Actions.invokeAction('SelectTask');
+    expect(actionSpy).toHaveBeenCalledTimes(1);
+    expect(actionSpy).not.toBeCalledWith("SelectTask", {
+      sid: "WR123",
+    });
+  });
+});

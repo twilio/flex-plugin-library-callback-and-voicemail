@@ -2,6 +2,7 @@ import * as Flex from '@twilio/flex-ui';
 import ApiService from './';
 import { EncodedParams } from '../../../types/serverless';
 import { UIAttributes } from '../../../types/ServiceConfiguration';
+import fetch from 'jest-fetch-mock';
 
 // NOTE: Make dummy class to extend ApiService because it's abstract
 class Test extends ApiService {
@@ -13,6 +14,10 @@ class Test extends ApiService {
   // NOTE: Make helper function to provide access to protected class members
   testBuildBody(encodedParams: EncodedParams): string {
     return this.buildBody(encodedParams);
+  }
+
+  testFetchJsonWithReject<T>(url: string, config: RequestInit, attempts: number): Promise<T>{
+    return this.fetchJsonWithReject(url, config, attempts);
   }
 }
 
@@ -39,5 +44,32 @@ describe('utils/common/ApiService', () => {
     const body = TestService.testBuildBody(encodedParams);
 
     expect(body).toBe('testParam1=testParam1ToBeEncoded&testParam2=testParam2ToBeEncoded');
+  });
+
+  describe('fetchJsonWithReject', () => {
+    it('should return json response', async () => {
+      fetch.mockResponseOnce(JSON.stringify({ data: 'Mock data' }));
+      const res = await TestService.testFetchJsonWithReject('mockURL', {}, 0);
+      expect(res).toEqual({ data: 'Mock data' });
+      fetch.resetMocks();
+    });
+
+    it('should throw error', async () => {
+      fetch.mockReject(new Error('mock error'));
+      TestService.testFetchJsonWithReject('mockURL', {}, 0).catch((err) => {
+        expect(err.message).toEqual('mock error');
+      });
+      fetch.resetMocks();
+    });
+
+    it('should retry on error', async () => {
+      fetch.mockReject({status: 429});
+      const fetchSpy = jest.spyOn(ApiService.prototype, 'fetchJsonWithReject');
+      try {
+        await TestService.testFetchJsonWithReject('mockURL', {}, 0);
+      } catch (e) {
+        expect(fetchSpy).toHaveBeenCalledTimes(11);
+      }
+    });
   });
 });

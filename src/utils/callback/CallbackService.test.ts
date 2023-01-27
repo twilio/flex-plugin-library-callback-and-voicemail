@@ -4,6 +4,8 @@ import * as Flex from "@twilio/flex-ui";
 import { setServiceConfiguration } from '../../../test-utils/flex-service-configuration';
 import { Actions } from "../../flex-hooks/states/";
 import fetch from 'jest-fetch-mock';
+import { ErrorManager} from "../ErrorManager";
+
 
 const mockTask = {
     sid: "WRxxx",
@@ -71,7 +73,6 @@ describe('callCustomerBack', () => {
         });
         const notificationSpy = jest.spyOn(Flex.Notifications, 'showNotification');
         await CallbackService.callCustomerBack(mockTask, 6).catch((err) => {
-            console.log("here34");
             expect(notificationSpy).toHaveBeenCalled();
         });
     });
@@ -129,6 +130,13 @@ describe('requeueCallback', () => {
         await CallbackService.requeueCallback(mockTask);
         expect(actionSpy).toHaveBeenCalledWith('WrapupTask', { task: mockTask });
         jest.restoreAllMocks();
+    });
+
+    it('throws error using ErrorManager', async () => {
+        const errorManagerSpy = jest.spyOn(ErrorManager, 'createAndProcessError');
+        await CallbackService.requeueCallback(mockTask).catch((e) => {
+            expect(errorManagerSpy).toHaveBeenCalled();
+        });
 
     });
 });

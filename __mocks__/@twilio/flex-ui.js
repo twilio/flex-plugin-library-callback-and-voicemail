@@ -93,6 +93,28 @@ class Actions {
   }
 }
 
+class TaskChannels {
+
+  constructor() {
+    this.register = jest.fn();
+  }
+}
+
+class DefaultTaskChannels {
+  constructor() {
+    this.createDefaultTaskChannel = jest.fn(() => {
+      return {
+        mockData: "mockData",
+        templates: {
+          IncomingTaskCanvas: { data: "mockIncomingTaskCanvas" },
+          TaskCanvasHeader: { data: "mockTaskCanvasHeader" },
+          TaskListItem: { data: "mockTaskListItem" }
+        }
+      }
+    });
+  }
+}
+
 class Notifications {
   registeredNotifications = new Map();
 
@@ -117,8 +139,15 @@ module.exports = {
       splitterOptions: {}
     }
   },
+  TaskInfoPanel: {
+    Content: {
+      replace: jest.fn()
+    }
+  },
   Actions: new Actions(),
   Manager: new Manager(),
+  TaskChannels: new TaskChannels(),
+  DefaultTaskChannels: new DefaultTaskChannels(),
   Notifications: new Notifications(),
   NotificationType: {
     warning: 'warning',
