@@ -42,7 +42,5 @@ export function createCallbackChannel(flex: typeof Flex, manager: Flex.Manager) 
   }
 
   // Register Channel
-  //CallbackChannel.capabilities.add(Flex.TaskChannelCapability.Wrapup);
-  console.log("channel", CallbackChannel);
   flex.TaskChannels.register(CallbackChannel);
 }

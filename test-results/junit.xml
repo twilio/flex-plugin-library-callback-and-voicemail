@@ -1,27 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="3" failures="1" errors="0" time="2.359">
-  <testsuite name="createCallbackChannel" errors="0" failures="1" skipped="0" timestamp="2023-01-27T11:22:39" time="1.733" tests="3">
-    <testcase classname="createCallbackChannel creates task channel if feature is enabled" name="createCallbackChannel creates task channel if feature is enabled" time="0.046">
+<testsuites name="jest tests" tests="38" failures="0" errors="0" time="10.561">
+  <testsuite name="Callback notifications" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="1.086" tests="2">
+    <testcase classname="Callback notifications errorCallingCustomer registers error notification" name="Callback notifications errorCallingCustomer registers error notification" time="0.002">
     </testcase>
-    <testcase classname="createCallbackChannel registers task channel if feature is enabled" name="createCallbackChannel registers task channel if feature is enabled" time="0.01">
+    <testcase classname="Callback notifications outboundDialingNotEnabled registers notification" name="Callback notifications outboundDialingNotEnabled registers notification" time="0.001">
     </testcase>
-    <testcase classname="createCallbackChannel registers task channel if feature is enabled" name="createCallbackChannel registers task channel if feature is enabled" time="0.012">
-      <failure>Error: expect(jest.fn()).toHaveBeenCalledWith(...expected)
-
-- Expected
-+ Received
-
-- {&quot;icons&quot;: {&quot;active&quot;: &lt;Memo /&gt;, &quot;list&quot;: &lt;Memo /&gt;, &quot;main&quot;: &lt;Memo /&gt;}, &quot;mockData&quot;: &quot;mockData&quot;, &quot;templates&quot;: {&quot;IncomingTaskCanvas&quot;: {&quot;data&quot;: &quot;mockIncomingTaskCanvas&quot;, &quot;firstLine&quot;: [Function firstLine]}, &quot;TaskCanvasHeader&quot;: {&quot;data&quot;: &quot;mockTaskCanvasHeader&quot;, &quot;title&quot;: [Function title]}, &quot;TaskListItem&quot;: {&quot;data&quot;: &quot;mockTaskListItem&quot;, &quot;firstLine&quot;: [Function firstLine]}}},
-+ {&quot;icons&quot;: {&quot;active&quot;: &lt;Memo /&gt;, &quot;list&quot;: &lt;Memo /&gt;, &quot;main&quot;: &lt;Memo /&gt;}, &quot;mockData&quot;: &quot;mockData&quot;, &quot;templates&quot;: {&quot;IncomingTaskCanvas&quot;: {&quot;data&quot;: &quot;mockIncomingTaskCanvas&quot;, &quot;firstLine&quot;: [Function firstLine]}, &quot;TaskCanvasHeader&quot;: {&quot;data&quot;: &quot;mockTaskCanvasHeader&quot;, &quot;title&quot;: [Function title]}, &quot;TaskListItem&quot;: {&quot;data&quot;: &quot;mockTaskListItem&quot;, &quot;firstLine&quot;: [Function firstLine]}}},
-
-Number of calls: 1
-    at Object.&lt;anonymous&gt; (/Users/parora/flex-ui/PluginsLibrary/flex-callback-and-voicemail-plugin/src/flex-hooks/channels/Callback.test.tsx:48:28)
-    at Object.asyncJestTest (/Users/parora/flex-ui/PluginsLibrary/flex-callback-and-voicemail-plugin/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)
-    at /Users/parora/flex-ui/PluginsLibrary/flex-callback-and-voicemail-plugin/node_modules/jest-jasmine2/build/queueRunner.js:45:12
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (/Users/parora/flex-ui/PluginsLibrary/flex-callback-and-voicemail-plugin/node_modules/jest-jasmine2/build/queueRunner.js:28:19)
-    at /Users/parora/flex-ui/PluginsLibrary/flex-callback-and-voicemail-plugin/node_modules/jest-jasmine2/build/queueRunner.js:75:41
-    at processTicksAndRejections (internal/process/task_queues.js:95:5)</failure>
+  </testsuite>
+  <testsuite name="SelectTask" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="1.108" tests="5">
+    <testcase classname="SelectTask adds beforeSelectTask listener" name="SelectTask adds beforeSelectTask listener" time="0.002">
+    </testcase>
+    <testcase classname="SelectTask throws error using ErrorManager" name="SelectTask throws error using ErrorManager" time="0.001">
+    </testcase>
+    <testcase classname="SelectTask invokes beforeSelectTask listener" name="SelectTask invokes beforeSelectTask listener" time="0.003">
+    </testcase>
+    <testcase classname="SelectTask does not invoke beforeSelectTask listener if task being selected is not null" name="SelectTask does not invoke beforeSelectTask listener if task being selected is not null" time="0.001">
+    </testcase>
+    <testcase classname="SelectTask does not invoke beforeSelectTask listener if no task was selected before event" name="SelectTask does not invoke beforeSelectTask listener if no task was selected before event" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="callCustomerBack" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="1.129" tests="8">
+    <testcase classname="callCustomerBack shows notification if outbound calling is not enabled" name="callCustomerBack shows notification if outbound calling is not enabled" time="0.004">
+    </testcase>
+    <testcase classname="callCustomerBack starts outbound call" name="callCustomerBack starts outbound call" time="0.004">
+    </testcase>
+    <testcase classname="callCustomerBack shows error notification if number of attempts exceeds 5" name="callCustomerBack shows error notification if number of attempts exceeds 5" time="0.001">
+    </testcase>
+    <testcase classname="callCustomerBack attempts to call again in case of error" name="callCustomerBack attempts to call again in case of error" time="0.001">
+    </testcase>
+    <testcase classname="requeueCallback creates a callback" name="requeueCallback creates a callback" time="0.001">
+    </testcase>
+    <testcase classname="requeueCallback invokes WrapupTask action on successful callback creation" name="requeueCallback invokes WrapupTask action on successful callback creation" time="0">
+    </testcase>
+    <testcase classname="requeueCallback throws error using ErrorManager" name="requeueCallback throws error using ErrorManager" time="0.003">
+    </testcase>
+    <testcase classname="createCallback calls serverless function to create callback" name="createCallback calls serverless function to create callback" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="initial state" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:05" time="0.101" tests="1">
+    <testcase classname="initial state should match initial state" name="initial state should match initial state" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Actions" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:05" time="0.13" tests="3">
+    <testcase classname="Actions callCustomer creates callCustomer action" name="Actions callCustomer creates callCustomer action" time="0.002">
+    </testcase>
+    <testcase classname="Actions requeueCallback creates requeueCallback action" name="Actions requeueCallback creates requeueCallback action" time="0.001">
+    </testcase>
+    <testcase classname="Actions setLastPlacedCallback creates setLastPlacedCallback action" name="Actions setLastPlacedCallback creates setLastPlacedCallback action" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="createCallbackChannel" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="1.345" tests="3">
+    <testcase classname="createCallbackChannel creates task channel" name="createCallbackChannel creates task channel" time="0.002">
+    </testcase>
+    <testcase classname="createCallbackChannel registers task channel" name="createCallbackChannel registers task channel" time="0">
+    </testcase>
+    <testcase classname="createCallbackChannel registers task channel with correct attributes" name="createCallbackChannel registers task channel with correct attributes" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="createVoicemailChannel" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="1.341" tests="3">
+    <testcase classname="createVoicemailChannel creates task channel if feature is enabled" name="createVoicemailChannel creates task channel if feature is enabled" time="0.002">
+    </testcase>
+    <testcase classname="createVoicemailChannel registers task channel" name="createVoicemailChannel registers task channel" time="0">
+    </testcase>
+    <testcase classname="createVoicemailChannel registers task channel if feature is enabled" name="createVoicemailChannel registers task channel if feature is enabled" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Callback and Voicemail plugin" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="2.262" tests="7">
+    <testcase classname="Callback and Voicemail plugin should render correct snapshot for voicemail" name="Callback and Voicemail plugin should render correct snapshot for voicemail" time="0.077">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin should render correct snapshot for callback" name="Callback and Voicemail plugin should render correct snapshot for callback" time="0.017">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin retry button should be disabled" name="Callback and Voicemail plugin retry button should be disabled" time="0.02">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin call button should be disabled" name="Callback and Voicemail plugin call button should be disabled" time="0.013">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin call button creates outbound call" name="Callback and Voicemail plugin call button creates outbound call" time="0.08">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin retry button requeues callback " name="Callback and Voicemail plugin retry button requeues callback " time="0.042">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin displays time correctly" name="Callback and Voicemail plugin displays time correctly" time="0.016">
+    </testcase>
+  </testsuite>
+  <testsuite name="utils/common/ApiService" errors="0" failures="0" skipped="0" timestamp="2023-01-27T15:24:04" time="9.448" tests="6">
+    <testcase classname="utils/common/ApiService should provide access to the Flex Manager instance" name="utils/common/ApiService should provide access to the Flex Manager instance" time="0.001">
+    </testcase>
+    <testcase classname="utils/common/ApiService should provide access to the configured serverless domain" name="utils/common/ApiService should provide access to the configured serverless domain" time="0.001">
+    </testcase>
+    <testcase classname="utils/common/ApiService should build encoded params into a string to use as the body for serverless reqeusts" name="utils/common/ApiService should build encoded params into a string to use as the body for serverless reqeusts" time="0">
+    </testcase>
+    <testcase classname="utils/common/ApiService fetchJsonWithReject should return json response" name="utils/common/ApiService fetchJsonWithReject should return json response" time="0.003">
+    </testcase>
+    <testcase classname="utils/common/ApiService fetchJsonWithReject should throw error" name="utils/common/ApiService fetchJsonWithReject should throw error" time="0.001">
+    </testcase>
+    <testcase classname="utils/common/ApiService fetchJsonWithReject should retry on error" name="utils/common/ApiService fetchJsonWithReject should retry on error" time="8.361">
     </testcase>
   </testsuite>
 </testsuites>

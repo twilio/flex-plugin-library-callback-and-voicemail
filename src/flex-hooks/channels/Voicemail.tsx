@@ -40,7 +40,7 @@ export function createVoicemailChannel(flex: typeof Flex, manager: Flex.Manager)
       main: <VoicemailIcon key="main-voicemail-icon" />,
     }
   }
-
+  
   // Register Channel
   flex.TaskChannels.register(VoicemailChannel);
 }

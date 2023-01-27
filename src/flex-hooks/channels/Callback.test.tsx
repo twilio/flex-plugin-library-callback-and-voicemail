@@ -1,7 +1,7 @@
 import * as Flex from "@twilio/flex-ui";
-import React from "react";
 import { createCallbackChannel } from './Callback';
-import VoicemailIcon from "@material-ui/icons/Voicemail";
+import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
+import React from 'react';
 
 describe('createCallbackChannel', () => {
 
@@ -9,19 +9,19 @@ describe('createCallbackChannel', () => {
   let manager: Flex.Manager = Flex.Manager.getInstance();
   const taskChannelSpy = jest.spyOn(Flex.TaskChannels, 'register');
 
-  it('creates task channel if feature is enabled', () => {
+  it('creates task channel', () => {
     const defaultTaskChannelSpy = jest.spyOn(Flex.DefaultTaskChannels, 'createDefaultTaskChannel');
     createCallbackChannel(flex, manager);
     expect(defaultTaskChannelSpy).toHaveBeenCalled();
     taskChannelSpy.mockClear();
   });
 
-  it('registers task channel if feature is enabled', () => {
-    createCallbackChannel(flex, manager);
-    expect(taskChannelSpy).toHaveBeenCalled();
+  it('registers task channel', () => {
+      createCallbackChannel(flex, manager);
+      expect(taskChannelSpy).toHaveBeenCalled();
   });
 
-  it('registers task channel if feature is enabled', () => {
+  it('registers task channel with correct attributes', () => {
     const expectedResponse = {
       mockData: "mockData",
       templates: {
@@ -39,13 +39,34 @@ describe('createCallbackChannel', () => {
         },
       },
       icons: {
-        active: <VoicemailIcon key="active-voicemail-icon" />,
-        list: <VoicemailIcon key="list-voicemail-icon" />,
-        main: <VoicemailIcon key="main-voicemail-icon" />,
+        active: <PhoneCallbackIcon key="active-callback-icon" />,
+        list: <PhoneCallbackIcon key="list-callback-icon" />,
+        main: <PhoneCallbackIcon key="main-callback-icon" />,
+      }
+    }
+
+    const mockTask = {
+      queueName: "mock queue",
+      attributes: {
+        name: "mock task"
       }
     }
     createCallbackChannel(flex, manager);
-    expect(taskChannelSpy).toHaveBeenCalledWith(expectedResponse);
-  });
+    
+    expect(taskChannelSpy.mock.calls[0][0].mockData).toEqual(expectedResponse.mockData);
+    expect(taskChannelSpy.mock.calls[0][0].icons).toEqual(expectedResponse.icons);
+    expect(taskChannelSpy.mock.calls[0][0].templates.IncomingTaskCanvas.data).toEqual("mockIncomingTaskCanvas");
+    expect(taskChannelSpy.mock.calls[0][0].templates.TaskCanvasHeader.data).toEqual("mockTaskCanvasHeader");
+    expect(taskChannelSpy.mock.calls[0][0].templates.TaskListItem.data).toEqual("mockTaskListItem");
 
+    let firstLine = taskChannelSpy.mock.calls[0][0].templates.TaskListItem?.firstLine;
+    expect(firstLine(mockTask)).toEqual(expectedResponse.templates.TaskListItem.firstLine(mockTask));
+
+    firstLine = taskChannelSpy.mock.calls[0][0].templates.IncomingTaskCanvas.firstLine;
+    expect(firstLine(mockTask)).toEqual(expectedResponse.templates.IncomingTaskCanvas.firstLine(mockTask));
+
+    const title = taskChannelSpy.mock.calls[0][0].templates.TaskCanvasHeader?.title;
+    expect(title(mockTask)).toEqual(expectedResponse.templates.TaskCanvasHeader.title(mockTask));
+
+  });
 });
