@@ -1,16 +1,13 @@
-
 export enum FlexPluginErrorType {
     action = "ActionFramework",
     serverless = "Serverless",
     programabelComponents = "ProgramableComponents"    
 }
 
-
 export enum FlexErrorSeverity {
     normal = "normal",
     severe = "severe"
 }
-
 
 export type FlexPluginErrorContents = {
     type?: FlexPluginErrorType | string;

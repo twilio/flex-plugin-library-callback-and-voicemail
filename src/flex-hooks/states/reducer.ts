@@ -2,7 +2,6 @@ import * as Flex from '@twilio/flex-ui';
 import { CallbackAndVoicemailState, INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK, Action } from './types';
 import initialState from './initialState';
 
-
 // Reducer
 export function callbackandvoicemail(state = initialState, action: Action): CallbackAndVoicemailState {
   switch (action.type) {
