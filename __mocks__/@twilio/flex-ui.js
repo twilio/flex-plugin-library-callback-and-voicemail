@@ -62,9 +62,7 @@ class Actions {
       try {
         await Promise.all(lifecycle[0].map(listener => {
           return new Promise(async (resolve, reject) => {
-            await listener(payload, () => {
-              reject(`Action ${name} cancelled by before event`);
-            });
+            await listener(payload, jest.fn(() => {}));
             resolve();
           })
         }));

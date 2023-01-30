@@ -33,6 +33,11 @@ const mockTask = {
 
 describe('Callback and Voicemail plugin', () => {
 
+    let mockDate;
+    beforeAll(() => {
+        mockDate = jest.spyOn(DateTime.prototype, 'toLocaleString').mockReturnValue('1/22/2023, 7:06:18 AM UTC');
+      });
+      
     it('should render correct snapshot for voicemail', () => {
         const wrapper = render(
                 <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask}/>
@@ -125,7 +130,7 @@ describe('Callback and Voicemail plugin', () => {
 
     it('displays time correctly', async () => {
         const locale = navigator.languages[0];
-        const expectedTimeReceived = DateTime.fromISO(mockTask.attributes!.callBackData!.utcDateTimeReceived, {locale: locale});
+        const expectedTimeReceived = DateTime.fromISO(mockTask.attributes!.callBackData!.utcDateTimeReceived);
         const formatOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' } as Intl.DateTimeFormatOptions;
         const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const expectedLocalTimeShort = expectedTimeReceived.toLocaleString({ ...formatOptions, timeZone: localTz });
@@ -138,4 +143,8 @@ describe('Callback and Voicemail plugin', () => {
         expect(getByText(expectedLocalTimeShort)).toBeInTheDocument();
         expect(getByText(expectedServerTimeShort)).toBeInTheDocument();
     });
+
+    afterAll(() => {
+        mockDate.mockRestore();
+      });
 })

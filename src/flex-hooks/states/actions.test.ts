@@ -2,6 +2,12 @@ import CallbackService from "../../utils/callback/CallbackService";
 import Actions from "./actions"
 import { INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK } from "./types";
 
+
+jest.mock('../../utils/callback/CallbackService', () => ({
+    callCustomerBack: jest.fn(() => Promise.resolve()),
+    requeueCallback: jest.fn(() => Promise.resolve()),
+    
+}));
 describe('Actions', () => {
     it('callCustomer creates callCustomer action', () => {
         const mockTask = {

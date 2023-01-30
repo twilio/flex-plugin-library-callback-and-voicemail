@@ -17,11 +17,10 @@ import { Actions } from "../../flex-hooks/states/"
 
 type CallbackAndVoicemailProps = {
   task: ITask,
-  allowRequeue: boolean,
   maxAttempts: number,
 }
 
-export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: CallbackAndVoicemailProps) => {
+export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemailProps) => {
   const dispatch = useDispatch();
 
   const {
@@ -104,12 +103,10 @@ export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: Callba
         </Flex>
       </Box>  
 
-      { allowRequeue &&
         <Box element="C_AND_V_CONTENT_BOX">
           <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">Callback attempt</Heading>
           <Text as="span">{thisAttempt} of { maxAttempts}</Text>
         </Box>
-      }
       </Flex>
     
       <Box element="C_AND_V_BUTTON_BOX">
@@ -124,7 +121,7 @@ export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: Callba
         </Box>
    
       
-      { allowRequeue && thisAttempt <  maxAttempts &&
+      { thisAttempt <  maxAttempts &&
         <Box element="C_AND_V_BUTTON_BOX">
           <Button fullWidth
             disabled={disableRetryButton}

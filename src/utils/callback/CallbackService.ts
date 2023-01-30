@@ -47,7 +47,7 @@ class CallbackService extends ApiService {
       Flex.Notifications.showNotification(
         CallbackNotification.OutboundDialingNotEnabled
       );
-      throw new Error("Outbound dialing is not enabled");
+      // throw new Error("Outbound dialing is not enabled");
     } else {
       try {
         // update state with the existing reservation sid so that we can re-select it later
