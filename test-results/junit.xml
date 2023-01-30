@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="38" failures="0" errors="0" time="10.408">
+  <testsuite name="Actions" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="0.824" tests="3">
+    <testcase classname="Actions callCustomer creates callCustomer action" name="Actions callCustomer creates callCustomer action" time="0.002">
+    </testcase>
+    <testcase classname="Actions requeueCallback creates requeueCallback action" name="Actions requeueCallback creates requeueCallback action" time="0">
+    </testcase>
+    <testcase classname="Actions setLastPlacedCallback creates setLastPlacedCallback action" name="Actions setLastPlacedCallback creates setLastPlacedCallback action" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="callCustomerBack" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="0.868" tests="8">
+    <testcase classname="callCustomerBack shows notification if outbound calling is not enabled" name="callCustomerBack shows notification if outbound calling is not enabled" time="0.002">
+    </testcase>
+    <testcase classname="callCustomerBack starts outbound call" name="callCustomerBack starts outbound call" time="0.001">
+    </testcase>
+    <testcase classname="callCustomerBack shows error notification if number of attempts exceeds 5" name="callCustomerBack shows error notification if number of attempts exceeds 5" time="0.001">
+    </testcase>
+    <testcase classname="callCustomerBack attempts to call again in case of error" name="callCustomerBack attempts to call again in case of error" time="0.001">
+    </testcase>
+    <testcase classname="requeueCallback creates a callback" name="requeueCallback creates a callback" time="0">
+    </testcase>
+    <testcase classname="requeueCallback invokes WrapupTask action on successful callback creation" name="requeueCallback invokes WrapupTask action on successful callback creation" time="0.001">
+    </testcase>
+    <testcase classname="requeueCallback throws error using ErrorManager" name="requeueCallback throws error using ErrorManager" time="0.002">
+    </testcase>
+    <testcase classname="createCallback calls serverless function to create callback" name="createCallback calls serverless function to create callback" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="SelectTask" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="0.868" tests="5">
+    <testcase classname="SelectTask adds beforeSelectTask listener" name="SelectTask adds beforeSelectTask listener" time="0.002">
+    </testcase>
+    <testcase classname="SelectTask throws error using ErrorManager" name="SelectTask throws error using ErrorManager" time="0.001">
+    </testcase>
+    <testcase classname="SelectTask invokes beforeSelectTask listener" name="SelectTask invokes beforeSelectTask listener" time="0.002">
+    </testcase>
+    <testcase classname="SelectTask does not invoke beforeSelectTask listener if task being selected is not null" name="SelectTask does not invoke beforeSelectTask listener if task being selected is not null" time="0">
+    </testcase>
+    <testcase classname="SelectTask does not invoke beforeSelectTask listener if no task was selected before event" name="SelectTask does not invoke beforeSelectTask listener if no task was selected before event" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Callback notifications" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="0.141" tests="2">
+    <testcase classname="Callback notifications errorCallingCustomer registers error notification" name="Callback notifications errorCallingCustomer registers error notification" time="0.001">
+    </testcase>
+    <testcase classname="Callback notifications outboundDialingNotEnabled registers notification" name="Callback notifications outboundDialingNotEnabled registers notification" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="initial state" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="0.124" tests="1">
+    <testcase classname="initial state should match initial state" name="initial state should match initial state" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="createVoicemailChannel" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="1.04" tests="3">
+    <testcase classname="createVoicemailChannel creates task channel if feature is enabled" name="createVoicemailChannel creates task channel if feature is enabled" time="0.001">
+    </testcase>
+    <testcase classname="createVoicemailChannel registers task channel" name="createVoicemailChannel registers task channel" time="0.001">
+    </testcase>
+    <testcase classname="createVoicemailChannel registers task channel with correct attributes" name="createVoicemailChannel registers task channel with correct attributes" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="createCallbackChannel" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="1.049" tests="3">
+    <testcase classname="createCallbackChannel creates task channel" name="createCallbackChannel creates task channel" time="0.001">
+    </testcase>
+    <testcase classname="createCallbackChannel registers task channel" name="createCallbackChannel registers task channel" time="0.001">
+    </testcase>
+    <testcase classname="createCallbackChannel registers task channel with correct attributes" name="createCallbackChannel registers task channel with correct attributes" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Callback and Voicemail plugin" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="1.586" tests="7">
+    <testcase classname="Callback and Voicemail plugin should render correct snapshot for voicemail" name="Callback and Voicemail plugin should render correct snapshot for voicemail" time="0.047">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin should render correct snapshot for callback" name="Callback and Voicemail plugin should render correct snapshot for callback" time="0.01">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin retry button should be disabled" name="Callback and Voicemail plugin retry button should be disabled" time="0.008">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin call button should be disabled" name="Callback and Voicemail plugin call button should be disabled" time="0.008">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin call button creates outbound call" name="Callback and Voicemail plugin call button creates outbound call" time="0.035">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin retry button requeues callback " name="Callback and Voicemail plugin retry button requeues callback " time="0.02">
+    </testcase>
+    <testcase classname="Callback and Voicemail plugin displays time correctly" name="Callback and Voicemail plugin displays time correctly" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="utils/common/ApiService" errors="0" failures="0" skipped="0" timestamp="2023-01-30T06:01:31" time="9.638" tests="6">
+    <testcase classname="utils/common/ApiService should provide access to the Flex Manager instance" name="utils/common/ApiService should provide access to the Flex Manager instance" time="0.001">
+    </testcase>
+    <testcase classname="utils/common/ApiService should provide access to the configured serverless domain" name="utils/common/ApiService should provide access to the configured serverless domain" time="0.001">
+    </testcase>
+    <testcase classname="utils/common/ApiService should build encoded params into a string to use as the body for serverless reqeusts" name="utils/common/ApiService should build encoded params into a string to use as the body for serverless reqeusts" time="0">
+    </testcase>
+    <testcase classname="utils/common/ApiService fetchJsonWithReject should return json response" name="utils/common/ApiService fetchJsonWithReject should return json response" time="0.002">
+    </testcase>
+    <testcase classname="utils/common/ApiService fetchJsonWithReject should throw error" name="utils/common/ApiService fetchJsonWithReject should throw error" time="0.001">
+    </testcase>
+    <testcase classname="utils/common/ApiService fetchJsonWithReject should retry on error" name="utils/common/ApiService fetchJsonWithReject should retry on error" time="8.813">
+    </testcase>
+  </testsuite>
+</testsuites>

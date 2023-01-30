@@ -1,6 +1,5 @@
 import * as Flex from "@twilio/flex-ui";
 import { EncodedParams } from "../../../types/serverless";
-import { getFeatureFlags } from '../../Configuration';
 import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../../ErrorManager";
 import { random } from "lodash";
 
@@ -14,8 +13,6 @@ export default abstract class ApiService {
   readonly serverlessProtocol: string;
 
   constructor() {
-    const custom_data = getFeatureFlags() || {};
-
     // use serverless_functions_domain from ui_attributes, or .env or set as undefined
 
     this.serverlessProtocol = "https";
@@ -24,15 +21,6 @@ export default abstract class ApiService {
     try {
       if (process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
       this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
-
-    if (custom_data?.serverless_functions_domain)
-      this.serverlessDomain = custom_data.serverless_functions_domain;
-    
-    if(custom_data?.serverless_functions_protocol)
-      this.serverlessProtocol = custom_data.serverless_functions_protocol;
-
-    if(custom_data?.serverless_functions_port)
-      this.serverlessDomain += ":" + custom_data.serverless_functions_port
 
     if (!this.serverlessDomain)
       throw Error("serverless_functions_domain is not set env file");

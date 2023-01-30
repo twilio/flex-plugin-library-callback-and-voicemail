@@ -2,11 +2,8 @@ import * as Flex from '@twilio/flex-ui';
 import React from 'react';
 import { TaskAttributes } from '../../types/task-router/Task';
 import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
-import { isFeatureEnabled } from '../../utils/Configuration';
 
 export function createCallbackChannel(flex: typeof Flex, manager: Flex.Manager) {
-
-  if(!isFeatureEnabled()) return;
 
   const channelDefinition = flex.DefaultTaskChannels.createDefaultTaskChannel(
     'callback',
@@ -45,6 +42,5 @@ export function createCallbackChannel(flex: typeof Flex, manager: Flex.Manager) 
   }
 
   // Register Channel
-  //CallbackChannel.capabilities.add(Flex.TaskChannelCapability.Wrapup);
   flex.TaskChannels.register(CallbackChannel);
 }

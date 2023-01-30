@@ -1,5 +1,5 @@
 import * as Flex from '@twilio/flex-ui';
-import { AppState, reduxNamespace } from '../src/flex-hooks/states/ConferenceSlice';
+import { AppState, reduxNamespace } from '../src/flex-hooks/states/types';
 import { mergeWith, unset } from 'lodash';
 
 // NOTE: Not sure a great way to "set" the Flex redux store value
@@ -31,3 +31,5 @@ export const setCustomReduxState = (appState: Partial<AppState[typeof reduxNames
     }
   });
 };
+
+
