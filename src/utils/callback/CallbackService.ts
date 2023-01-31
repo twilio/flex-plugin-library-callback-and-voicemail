@@ -203,7 +203,7 @@ class CallbackService extends ApiService {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: this.buildBody(encodedParams),
       }
-    );
+      );
     return response;
   };
 }

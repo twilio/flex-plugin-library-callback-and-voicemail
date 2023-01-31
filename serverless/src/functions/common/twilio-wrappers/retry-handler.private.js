@@ -1,6 +1,4 @@
-const { random, isNumber, isString } = require("lodash");
-
-snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+const { random, isNumber } = require("lodash");
 
 /**
  * @param {object} error the error from the calling function
@@ -24,6 +22,9 @@ snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
  *   retry handler in the browser are still encouraged.
  */
 exports.retryHandler = async (error, parameters, callback) => {
+
+  const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 
   if(!isNumber(parameters.attempts))
     throw "Invalid parameters object passed. Parameters must contain the number of attempts";

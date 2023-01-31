@@ -31,14 +31,6 @@ exports.validate = function(callingFunctionPath, parameterObject, requiredKeysAr
   return errorMessage;
 }
 
-exports.isBoolean = function(data) {
-  let valueToCheck = data;
-  if (module.exports.isString(valueToCheck)) {
-    valueToCheck = Boolean(data);
-  }
-  return valueToCheck === true || valueToCheck === false || Object.prototype.toString.call(valueToCheck) === '[object Boolean]';
-}
-
 exports.isString = function(data) {
   return typeof data === 'string' || data instanceof String;
 }

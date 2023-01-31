@@ -12,7 +12,7 @@ describe('Actions', () => {
     it('callCustomer creates callCustomer action', () => {
         const mockTask = {
             taskSid: "123"
-        }
+        };
         const action = Actions.callCustomer(mockTask);
         expect(action).toEqual({
             type: INITIATE_CALLBACK,

@@ -1,3 +1,4 @@
+import React from 'react';
 import * as Flex from '@twilio/flex-ui';
 import { ErrorManager, FlexPluginErrorType } from "../../utils/ErrorManager";
 import CallbackAndVoicemail from '../../custom-components/CallbackAndVoicemail';

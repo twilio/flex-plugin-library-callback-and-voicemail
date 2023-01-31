@@ -1,3 +1,4 @@
+import React from 'react';
 import * as Flex from '@twilio/flex-ui';
 import { CustomizationProvider, PasteCustomCSS, CustomizationProviderProps } from "@twilio-paste/core/customization";
 import customPasteElements  from "../flex-hooks/paste-elements";
