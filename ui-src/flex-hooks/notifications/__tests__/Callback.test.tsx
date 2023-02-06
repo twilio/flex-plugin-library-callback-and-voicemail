@@ -1,6 +1,6 @@
 import * as Flex from "@twilio/flex-ui";
-import errorCallingCustomer from './Callback';
-import outboundDialingNotEnabled from './Callback';
+import errorCallingCustomer from '../Callback';
+import outboundDialingNotEnabled from '../Callback';
 
 describe('Callback notifications', () => {
     let flex: typeof Flex = Flex;

@@ -1,26 +1,25 @@
-import React from 'react';
 import * as Flex from "@twilio/flex-ui";
-import { createVoicemailChannel } from './Voicemail';
-import VoicemailIcon from "@material-ui/icons/Voicemail";
+import { createCallbackChannel } from '../Callback';
+import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
+import React from 'react';
 
-describe('createVoicemailChannel', () => {
+describe('createCallbackChannel', () => {
 
   let flex: typeof Flex = Flex;
   let manager: Flex.Manager = Flex.Manager.getInstance();
   const taskChannelSpy = jest.spyOn(Flex.TaskChannels, 'register');
 
-  it('creates task channel if feature is enabled', () => {
+  it('creates task channel', () => {
     const defaultTaskChannelSpy = jest.spyOn(Flex.DefaultTaskChannels, 'createDefaultTaskChannel');
-    createVoicemailChannel(flex, manager);
+    createCallbackChannel(flex, manager);
     expect(defaultTaskChannelSpy).toHaveBeenCalled();
     taskChannelSpy.mockClear();
   });
 
   it('registers task channel', () => {
-    createVoicemailChannel(flex, manager);
-    expect(taskChannelSpy).toHaveBeenCalled();
-    taskChannelSpy.mockClear();
-  })
+      createCallbackChannel(flex, manager);
+      expect(taskChannelSpy).toHaveBeenCalled();
+  });
 
   it('registers task channel with correct attributes', () => {
     const expectedResponse = {
@@ -40,9 +39,9 @@ describe('createVoicemailChannel', () => {
         },
       },
       icons: {
-        active: <VoicemailIcon key="active-voicemail-icon" />,
-        list: <VoicemailIcon key="list-voicemail-icon" />,
-        main: <VoicemailIcon key="main-voicemail-icon" />,
+        active: <PhoneCallbackIcon key="active-callback-icon" />,
+        list: <PhoneCallbackIcon key="list-callback-icon" />,
+        main: <PhoneCallbackIcon key="main-callback-icon" />,
       }
     }
 
@@ -52,8 +51,8 @@ describe('createVoicemailChannel', () => {
         name: "mock task"
       }
     }
-
-    createVoicemailChannel(flex, manager);
+    createCallbackChannel(flex, manager);
+    
     expect(taskChannelSpy.mock.calls[0][0].mockData).toEqual(expectedResponse.mockData);
     expect(taskChannelSpy.mock.calls[0][0].icons).toEqual(expectedResponse.icons);
     expect(taskChannelSpy.mock.calls[0][0].templates.IncomingTaskCanvas.data).toEqual("mockIncomingTaskCanvas");
@@ -68,5 +67,6 @@ describe('createVoicemailChannel', () => {
 
     const title = taskChannelSpy.mock.calls[0][0].templates.TaskCanvasHeader?.title;
     expect(title(mockTask)).toEqual(expectedResponse.templates.TaskCanvasHeader.title(mockTask));
+
   });
-})
+});

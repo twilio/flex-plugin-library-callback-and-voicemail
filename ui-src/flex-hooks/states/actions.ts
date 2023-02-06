@@ -1,7 +1,7 @@
 import * as Flex from '@twilio/flex-ui';
 import { Action } from '../../flex-hooks/states';
-import CallbackService from '../../utils/callback/CallbackService'
 import { INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK } from './types';
+import CallbackService from '../../service/CallbackService';
 
 // Provide task to "pending" action as payload
 // https://github.com/pburtchaell/redux-promise-middleware/blob/main/docs/guides/optimistic-updates.md

@@ -1,25 +1,26 @@
-import * as Flex from "@twilio/flex-ui";
-import { createCallbackChannel } from './Callback';
-import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 import React from 'react';
+import * as Flex from "@twilio/flex-ui";
+import { createVoicemailChannel } from '../Voicemail';
+import VoicemailIcon from "@material-ui/icons/Voicemail";
 
-describe('createCallbackChannel', () => {
+describe('createVoicemailChannel', () => {
 
   let flex: typeof Flex = Flex;
   let manager: Flex.Manager = Flex.Manager.getInstance();
   const taskChannelSpy = jest.spyOn(Flex.TaskChannels, 'register');
 
-  it('creates task channel', () => {
+  it('creates task channel if feature is enabled', () => {
     const defaultTaskChannelSpy = jest.spyOn(Flex.DefaultTaskChannels, 'createDefaultTaskChannel');
-    createCallbackChannel(flex, manager);
+    createVoicemailChannel(flex, manager);
     expect(defaultTaskChannelSpy).toHaveBeenCalled();
     taskChannelSpy.mockClear();
   });
 
   it('registers task channel', () => {
-      createCallbackChannel(flex, manager);
-      expect(taskChannelSpy).toHaveBeenCalled();
-  });
+    createVoicemailChannel(flex, manager);
+    expect(taskChannelSpy).toHaveBeenCalled();
+    taskChannelSpy.mockClear();
+  })
 
   it('registers task channel with correct attributes', () => {
     const expectedResponse = {
@@ -39,9 +40,9 @@ describe('createCallbackChannel', () => {
         },
       },
       icons: {
-        active: <PhoneCallbackIcon key="active-callback-icon" />,
-        list: <PhoneCallbackIcon key="list-callback-icon" />,
-        main: <PhoneCallbackIcon key="main-callback-icon" />,
+        active: <VoicemailIcon key="active-voicemail-icon" />,
+        list: <VoicemailIcon key="list-voicemail-icon" />,
+        main: <VoicemailIcon key="main-voicemail-icon" />,
       }
     }
 
@@ -51,8 +52,8 @@ describe('createCallbackChannel', () => {
         name: "mock task"
       }
     }
-    createCallbackChannel(flex, manager);
-    
+
+    createVoicemailChannel(flex, manager);
     expect(taskChannelSpy.mock.calls[0][0].mockData).toEqual(expectedResponse.mockData);
     expect(taskChannelSpy.mock.calls[0][0].icons).toEqual(expectedResponse.icons);
     expect(taskChannelSpy.mock.calls[0][0].templates.IncomingTaskCanvas.data).toEqual("mockIncomingTaskCanvas");
@@ -67,6 +68,5 @@ describe('createCallbackChannel', () => {
 
     const title = taskChannelSpy.mock.calls[0][0].templates.TaskCanvasHeader?.title;
     expect(title(mockTask)).toEqual(expectedResponse.templates.TaskCanvasHeader.title(mockTask));
-
   });
-});
+})

@@ -1,10 +1,10 @@
 import * as Flex from "@twilio/flex-ui";
-import ApiService from "../serverless/ApiService";
+import ApiService from "";
 import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../ErrorManager";
-import { EncodedParams } from "../../types/serverless";
-import { TaskAttributes } from "../../types/task-router/Task";
-import { CallbackNotification } from "../../flex-hooks/notifications/Callback";
-import { Actions } from "../../flex-hooks/states/";
+import { EncodedParams } from "../types/serverless";
+import { TaskAttributes } from "../types/task-router/Task";
+import { CallbackNotification } from "../flex-hooks/notifications/Callback";
+import { Actions } from "../flex-hooks/states";
 
 export interface CreateCallbackResponse {
   success: boolean;

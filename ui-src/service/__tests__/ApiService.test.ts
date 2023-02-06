@@ -1,7 +1,7 @@
 import * as Flex from '@twilio/flex-ui';
-import ApiService from './';
-import { EncodedParams } from '../../../types/serverless';
-import { UIAttributes } from '../../../types/ServiceConfiguration';
+import ApiService from '../ApiService';
+import { EncodedParams } from '../../types/serverless';
+import { UIAttributes } from '../../types/ServiceConfiguration';
 import fetch from 'jest-fetch-mock';
 
 // NOTE: Make dummy class to extend ApiService because it's abstract

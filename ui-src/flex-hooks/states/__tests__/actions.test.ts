@@ -1,6 +1,6 @@
-import CallbackService from "../../utils/callback/CallbackService";
-import Actions from "./actions"
-import { INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK } from "./types";
+import CallbackService from "../../../service/CallbackService";
+import Actions from "../actions"
+import { INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK } from "../types";
 
 
 jest.mock('../../utils/callback/CallbackService', () => ({

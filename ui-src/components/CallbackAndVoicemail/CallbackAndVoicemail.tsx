@@ -8,11 +8,11 @@ import { InformationIcon } from "@twilio-paste/icons/cjs/InformationIcon";
 
 import React from 'react';
 import { DateTime } from 'luxon';
-import { TaskAttributes } from 'types/task-router/Task';
+import { TaskAttributes } from '../../types/task-router/Task';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState, reduxNamespace } from '../../flex-hooks/states'
-import { Actions } from "../../flex-hooks/states/"
+import { Actions } from "../../flex-hooks/states"
 
 
 type CallbackAndVoicemailProps = {

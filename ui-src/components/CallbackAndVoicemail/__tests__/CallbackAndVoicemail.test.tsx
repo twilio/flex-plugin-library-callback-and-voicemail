@@ -1,9 +1,9 @@
 import React from 'react';
 import {render} from '@testing-library/react'
-import { CallbackAndVoicemail } from './CallbackAndVoicemail';
+import { CallbackAndVoicemail } from '../CallbackAndVoicemail';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
-import CallbackService from '../../utils/callback/CallbackService'
+import CallbackService from '../../../service/CallbackService';
 import { DateTime } from 'luxon';
 
 jest.mock('../../utils/callback/CallbackService');

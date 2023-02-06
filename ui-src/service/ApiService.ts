@@ -1,6 +1,6 @@
 import * as Flex from "@twilio/flex-ui";
-import { EncodedParams } from "../../../types/serverless";
-import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../../ErrorManager";
+import { EncodedParams } from "../types/serverless";
+import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../utils/ErrorManager";
 import { random } from "lodash";
 
 function delay<T>(ms: number, result?: T) {
