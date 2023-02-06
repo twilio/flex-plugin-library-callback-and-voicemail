@@ -4,8 +4,8 @@ describe('Taskrouter create task', () => {
     beforeAll(() => {
         helpers.setup();
         global.Runtime._addFunction(
-            'common/twilio-wrappers/retry-handler',
-            './serverless/src/functions/common/twilio-wrappers/retry-handler.private.js',
+            'twilio-wrappers/retry-handler',
+            './functions/twilio-wrappers/retry-handler.private.js',
         );
     });
 
@@ -31,7 +31,7 @@ describe('Taskrouter create task', () => {
     const context = { getTwilioClient: () => getTaskrouterMockClient(createTaskMock) };
 
     it('creates task successfully', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: "WWxxx",
             taskChannel: "TCxxx",
@@ -48,7 +48,7 @@ describe('Taskrouter create task', () => {
     });
 
     it('throws error for invalid number of attempts', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: "WWxxx",
             taskChannel: "TCxxx",
@@ -70,7 +70,7 @@ describe('Taskrouter create task', () => {
     });
 
     it('throws error for invalid context', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: "WWxxx",
             taskChannel: "TCxxx",
@@ -92,7 +92,7 @@ describe('Taskrouter create task', () => {
     });
 
     it('throws error if workflowSid is not string', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: 1,
             taskChannel: "TCxxx",
@@ -114,7 +114,7 @@ describe('Taskrouter create task', () => {
     });
 
     it('throws error if workflowSid is missing', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             taskChannel: "TCxxx",
             priority: 1,
@@ -135,7 +135,7 @@ describe('Taskrouter create task', () => {
     });
 
     it('throws error if taskChannel is not string', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: "WWxxx",
             taskChannel: 1,
@@ -157,7 +157,7 @@ describe('Taskrouter create task', () => {
     });
 
     it('throws error if taskChannel is missing', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: "WWxxx",
             priority: 1,
@@ -177,8 +177,8 @@ describe('Taskrouter create task', () => {
         expect(err).toBe("Invalid parameters object passed. Parameters must contain taskChannel string");
     });
 
-        it('throws error for invalid attributes', async () => {
-        const { createTask } = require('../../../serverless/src/functions/common/twilio-wrappers/taskrouter.private');
+    it('throws error for invalid attributes', async () => {
+        const { createTask } = require('../../../functions/twilio-wrappers/taskrouter.private');
         const parameters = {
             workflowSid: "WWxxx",
             taskChannel: "TCxxx",

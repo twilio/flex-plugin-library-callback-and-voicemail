@@ -7,8 +7,8 @@ describe('Prepare Flex Function', () => {
   beforeAll(() => {
     helpers.setup();
     global.Runtime._addFunction(
-      'common/helpers/parameter-validator',
-      './serverless/src/functions/common/helpers/parameter-validator.private.js',
+      'helpers/parameter-validator',
+      './functions/helpers/parameter-validator.private.js',
     );
 
     jest.mock('twilio-flex-token-validator', () => {
@@ -19,7 +19,8 @@ describe('Prepare Flex Function', () => {
   });
 
   it('prepareFlexFunction is called successfully ', () => {
-    const PrepareFunction = require('../../../serverless/src/functions/common/helpers/prepare-function.private');
+    const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
+
     const spyMethod = jest.spyOn(PrepareFunction, 'prepareFlexFunction');
     const mockHandlerFn = jest.fn();
     const requiredParameters = [
@@ -38,8 +39,8 @@ describe('Prepare Function', () => {
   beforeAll(() => {
     helpers.setup();
     global.Runtime._addFunction(
-      'common/helpers/parameter-validator',
-      './serverless/src/functions/common/helpers/parameter-validator.private.js',
+      'helpers/parameter-validator',
+      './functions/helpers/parameter-validator.private.js',
     );
   });
   beforeEach(() => {
@@ -57,7 +58,7 @@ describe('Prepare Function', () => {
   };
 
   it('prepareFlexFunction is called successfully ', () => {
-    const PrepareFunction = require('../../../serverless/src/functions/common/helpers/prepare-function.private');
+    const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
     const requiredParameters = [
       { key: 'taskSid', purpose: 'unique ID of task to update' },
       { key: 'to', purpose: 'number to add to the conference' },
@@ -73,7 +74,7 @@ describe('Prepare Function', () => {
   });
 
   it('prepareFlexFunction returns error 400', () => {
-    const PrepareFunction = require('../../../serverless/src/functions/common/helpers/prepare-function.private');
+    const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
     const requiredParameters = [
       { key: 'taskSid', purpose: 'unique ID of task to update' },
       { key: 'to', purpose: 'number to add to the conference' },
@@ -90,7 +91,7 @@ describe('Prepare Function', () => {
   });
 
   it('prepareFlexFunction error handler', () => {
-    const PrepareFunction = require('../../../serverless/src/functions/common/helpers/prepare-function.private');
+    const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
     const requiredParameters = [
       { key: 'taskSid', purpose: 'unique ID of task to update' },
       { key: 'to', purpose: 'number to add to the conference' },

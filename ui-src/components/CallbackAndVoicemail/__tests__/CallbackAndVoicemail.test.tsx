@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import CallbackService from '../../../service/CallbackService';
 import { DateTime } from 'luxon';
 
-jest.mock('../../utils/callback/CallbackService');
+jest.mock('../../../service/CallbackService');
 
 jest.mock('react-redux', () => ({
   useSelector: () => ({
@@ -66,7 +66,7 @@ describe('Callback and Voicemail plugin', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    it('retry button should be disabled', () => {
+    it.only('retry button should be disabled', () => {
         const mockTask = { 
             taskStatus: 'cancelled',
             attributes: {

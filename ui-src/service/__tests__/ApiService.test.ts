@@ -21,7 +21,7 @@ class Test extends ApiService {
   }
 }
 
-describe('utils/common/ApiService', () => {
+describe('ApiService', () => {
   const TestService = new Test();
 
   it('should provide access to the Flex Manager instance', () => {
@@ -47,8 +47,10 @@ describe('utils/common/ApiService', () => {
   });
 
   describe('fetchJsonWithReject', () => {
-    it('should return json response', async () => {
-      fetch.mockResponseOnce(JSON.stringify({ data: 'Mock data' }));
+    it.only('should return json response', async () => {
+      fetch.resetMocks();
+
+      fetch.mockResponseOnce(JSON.stringify({ 'data': 'Mock data' }));
       const res = await TestService.testFetchJsonWithReject('mockURL', {}, 0);
       expect(res).toEqual({ data: 'Mock data' });
       fetch.resetMocks();

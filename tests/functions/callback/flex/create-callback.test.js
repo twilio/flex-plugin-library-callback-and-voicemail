@@ -1,6 +1,6 @@
 import helpers from '../../../test-utils/test-helper';
 
-jest.mock('serverless/src/functions/common/helpers/prepare-function.private.js', () => ({
+jest.mock('functions/helpers/prepare-function.private.js', () => ({
   __esModule: true,
   prepareFlexFunction: (_, fn) => fn,
 }));
@@ -49,25 +49,26 @@ describe('Create callback', () => {
     beforeAll(() => {
         helpers.setup();
         global.Runtime._addFunction(
-            'common/helpers/prepare-function',
-            './serverless/src/functions/common/helpers/prepare-function.private.js',
+            'helpers/prepare-function',
+            './functions/helpers/prepare-function.private.js',
         );
         global.Runtime._addFunction(
-            'common/helpers/parameter-validator',
-            './serverless/src/functions/common/helpers/parameter-validator.private.js',
+            'helpers/parameter-validator',
+            './functions/helpers/parameter-validator.private.js',
         );
         global.Runtime._addFunction(
-            'common/twilio-wrappers/taskrouter',
-            './serverless/src/functions/common/twilio-wrappers/taskrouter.private.js',
+            'twilio-wrappers/taskrouter',
+            './functions/twilio-wrappers/taskrouter.private.js',
         );
         global.Runtime._addFunction(
-            'common/twilio-wrappers/retry-handler',
-            './serverless/src/functions/common/twilio-wrappers/retry-handler.private.js',
+            'twilio-wrappers/retry-handler',
+            './functions/twilio-wrappers/retry-handler.private.js',
         );
     });
 
     it('createCallback is called successfully', async () => {
-        const createCallback = require('../../../../serverless/src/functions/callback/flex/create-callback');
+        const createCallback = require('../../../../functions/callback/flex/create-callback');
+
         const handlerFn = createCallback.handler;
         const mockContext = {
             PATH: 'mockPath',
@@ -86,7 +87,7 @@ describe('Create callback', () => {
     });
 
     it('createCallback error handler is called', async () => {
-        const createCallback = require('../../../../serverless/src/functions/callback/flex/create-callback');
+        const createCallback = require('../../../../functions/callback/flex/create-callback');
         const handlerFn = createCallback.handler;
 
         const mockResponse = new Twilio.Response();

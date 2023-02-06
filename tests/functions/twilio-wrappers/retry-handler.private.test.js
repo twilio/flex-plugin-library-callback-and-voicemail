@@ -1,4 +1,4 @@
-import RetryHandler from '../../../serverless/src/functions/common/twilio-wrappers/retry-handler.private';
+import RetryHandler from '../../../functions/twilio-wrappers/retry-handler.private';
 
 describe('Retry Handler', () => {
   const OLD_ENV = process.env;

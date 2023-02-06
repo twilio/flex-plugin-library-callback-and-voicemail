@@ -1,4 +1,4 @@
-import ParameterValidator from '../../../serverless/src/functions/common/helpers/parameter-validator.private';
+import ParameterValidator from '../../../functions/helpers/parameter-validator.private';
 
 const functionPath = 'mockFunctionPath';
 

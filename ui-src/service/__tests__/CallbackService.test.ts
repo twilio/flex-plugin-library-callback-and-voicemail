@@ -4,7 +4,7 @@ import * as Flex from "@twilio/flex-ui";
 import { setServiceConfiguration } from '../../../test-utils/flex-service-configuration';
 import { Actions } from "../../flex-hooks/states";
 import fetch from 'jest-fetch-mock';
-import { ErrorManager} from "../ErrorManager";
+import { ErrorManager} from "../../utils/ErrorManager";
 
 
 const mockTask = {

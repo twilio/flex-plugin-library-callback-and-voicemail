@@ -1,4 +1,5 @@
 module.exports = {
+  rootDir: '.',
   clearMocks: true,
   setupFilesAfterEnv: [
     "<rootDir>/setupTests.js"

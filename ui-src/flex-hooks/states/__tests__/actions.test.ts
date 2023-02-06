@@ -3,7 +3,7 @@ import Actions from "../actions"
 import { INITIATE_CALLBACK, REQUEUE_CALLBACK, PLACED_CALLBACK } from "../types";
 
 
-jest.mock('../../utils/callback/CallbackService', () => ({
+jest.mock('../../../service/CallbackService', () => ({
     callCustomerBack: jest.fn(() => Promise.resolve()),
     requeueCallback: jest.fn(() => Promise.resolve()),
     

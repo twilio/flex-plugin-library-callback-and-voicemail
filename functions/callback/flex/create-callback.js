@@ -1,6 +1,6 @@
-const { prepareFlexFunction } = require(Runtime.getFunctions()["common/helpers/prepare-function"].path);
+const { prepareFlexFunction } = require(Runtime.getFunctions()["helpers/prepare-function"].path);
 const TaskOperations = require(Runtime.getFunctions()[
-  "common/twilio-wrappers/taskrouter"
+  "twilio-wrappers/taskrouter"
 ].path);
 
 const requiredParameters = [

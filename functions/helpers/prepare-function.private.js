@@ -1,6 +1,6 @@
 const TokenValidator = require("twilio-flex-token-validator").functionValidator;
 const ParameterValidator = require(Runtime.getFunctions()[
-  "common/helpers/parameter-validator"
+  "helpers/parameter-validator"
 ].path);
 
 exports.prepareFunction = (context, event, callback, requiredParameters, handlerFn) => {

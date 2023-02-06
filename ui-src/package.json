@@ -1,0 +1,41 @@
+{
+  "name": "flex-callback-and-voicemail-plugin",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "twilio flex:plugins:start",
+    "test": "jest",
+    "postinstall": "flex-plugin pre-script-check"
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "@twilio-paste/core": "^17.2.0",
+    "@twilio-paste/icons": "^9.4.2",
+    "@twilio/flex-dev-utils": "^5.1.3",
+    "@twilio/flex-plugin-scripts": "6.0.3",
+    "@types/jest": "^26.0.20",
+    "lodash": "^4.17.20",
+    "luxon": "^3.1.1",
+    "rrule": "^2.7.1",
+    "tzdata": "^1.0.35"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "12.1.5",
+    "@testing-library/user-event": "14.4.3",
+    "@twilio/flex-ui": "2.0.2",
+    "@types/luxon": "^3.1.0",
+    "@types/react-redux": "^7.1.1",
+    "jest": "^26.0.20",
+    "jest-fetch-mock": "3.0.3",
+    "jest-junit": "12.0.0",
+    "react-test-renderer": "17.0.2",
+    "typescript": "^4",
+    "twilio": "3.84.1",
+    "twilio-flex-token-validator": "^1.5.4"
+  },
+  "jest-junit": {
+    "outputDirectory": "./test-results"
+  }
+}

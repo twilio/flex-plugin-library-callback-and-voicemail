@@ -1,6 +1,6 @@
 import * as Flex from "@twilio/flex-ui";
-import ApiService from "";
-import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../ErrorManager";
+import ApiService from "./ApiService";
+import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../utils/ErrorManager";
 import { EncodedParams } from "../types/serverless";
 import { TaskAttributes } from "../types/task-router/Task";
 import { CallbackNotification } from "../flex-hooks/notifications/Callback";

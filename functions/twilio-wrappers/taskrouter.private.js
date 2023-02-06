@@ -1,7 +1,7 @@
 const { isString, isObject, isNumber } = require("lodash");
 
 const retryHandler = require(Runtime.getFunctions()[
-  "common/twilio-wrappers/retry-handler"
+  "twilio-wrappers/retry-handler"
 ].path).retryHandler;
 
 /**
