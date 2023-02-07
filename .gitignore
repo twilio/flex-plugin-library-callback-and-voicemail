@@ -65,6 +65,8 @@ appConfig.js
 pluginsService.js
 build/
 
+package-lock.json
+
 # serverless
 .twilio-functions
 .twiliodeployinfo
