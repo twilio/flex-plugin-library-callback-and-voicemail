@@ -64,3 +64,16 @@ typings/
 appConfig.js
 pluginsService.js
 build/
+
+# serverless
+.twilio-functions
+.twiliodeployinfo
+
+#jest
+test-results/
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
