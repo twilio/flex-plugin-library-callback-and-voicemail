@@ -1,0 +1,36 @@
+name: Bundle and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - run: npm install -g twilio-cli
+      - run: twilio plugins:install @twilio-labs/plugin-flex
+      - run: npm install
+
+      - name: Create bundle
+        run: npm run build
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+          TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+
+      - name: Find package version
+        id: packageVersion
+        run: echo "package_json=$(cat package.json | tr -d "\n")" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        run: gh release create -d "v${{ fromJson(steps.packageVersion.outputs.package_json).version }}" ./build/*.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
