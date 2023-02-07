@@ -60,7 +60,6 @@ export default abstract class ApiService {
         return response.json();
       })
       .catch(async (error) => {
-        console.log('error', error);
         // Try to return proper error message from both caught promises and Error objects
         // https://gist.github.com/odewahn/5a5eeb23279eed6a80d7798fdb47fe91
         try {

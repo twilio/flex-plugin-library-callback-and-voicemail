@@ -47,10 +47,8 @@ describe('ApiService', () => {
   });
 
   describe('fetchJsonWithReject', () => {
-    it.only('should return json response', async () => {
-      fetch.resetMocks();
-
-      fetch.mockResponseOnce(JSON.stringify({ 'data': 'Mock data' }));
+    it('should return json response', async () => {
+      fetch.mockResponse(JSON.stringify({ 'data': 'Mock data' }));
       const res = await TestService.testFetchJsonWithReject('mockURL', {}, 0);
       expect(res).toEqual({ data: 'Mock data' });
       fetch.resetMocks();

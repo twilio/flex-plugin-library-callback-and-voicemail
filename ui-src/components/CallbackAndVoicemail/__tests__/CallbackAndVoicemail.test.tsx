@@ -66,7 +66,7 @@ describe('Callback and Voicemail plugin', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    it.only('retry button should be disabled', () => {
+    it('retry button should be disabled', () => {
         const mockTask = { 
             taskStatus: 'cancelled',
             attributes: {
