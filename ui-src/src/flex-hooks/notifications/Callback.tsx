@@ -3,21 +3,20 @@ import { StringTemplates } from '../strings/Callback';
 
 // Export the notification IDs an enum for better maintainability when accessing them elsewhere
 export enum CallbackNotification {
-  ErrorCallingCustomer = 'CallbackErrorCallingCustomer',
-  ErrorRequeuingCallbackTask = 'CallbackErrorRequeuingCallbackTask',
-  OutboundDialingNotEnabled = 'CallbackOutboundDialingNotEnabled'
+  OutboundDialingNotEnabled = 'CallbackOutboundDialingNotEnabled',
+  ErrorCallBackAndVoicemail= 'ErrorCallBackAndVoicemail'
 };
 
 export default (flex: typeof Flex, manager: Flex.Manager) => {
-  errorCallingCustomer(flex, manager);
+  errorNotification(flex, manager);
   outboundDialingNotEnabled(flex, manager);
 }
 
-function errorCallingCustomer(flex: typeof Flex, manager: Flex.Manager) {
+function errorNotification(flex: typeof Flex, manager: Flex.Manager) {
   flex.Notifications.registerNotification({
-    id: CallbackNotification.ErrorCallingCustomer,
+    id: CallbackNotification.ErrorCallBackAndVoicemail,
     type: Flex.NotificationType.error,
-    content: StringTemplates.ErrorCallingCustomer
+    content: StringTemplates.ErrorCallBackAndVoicemail
   });
 }
 

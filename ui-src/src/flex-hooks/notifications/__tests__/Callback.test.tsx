@@ -1,5 +1,5 @@
 import * as Flex from "@twilio/flex-ui";
-import errorCallingCustomer from '../Callback';
+import errorNotification from '../Callback';
 import outboundDialingNotEnabled from '../Callback';
 
 describe('Callback notifications', () => {
@@ -8,11 +8,11 @@ describe('Callback notifications', () => {
     const notificationSpy = jest.spyOn(Flex.Notifications, 'registerNotification');
 
     it('errorCallingCustomer registers error notification', () => {
-        errorCallingCustomer(flex, manager);
+        errorNotification(flex, manager);
         expect(notificationSpy).toHaveBeenCalledWith({
-            id: 'CallbackErrorCallingCustomer',
+            id: 'ErrorCallBackAndVoicemail',
             type: "error",
-            content: "PSCallbackErrorCallingCustomerNotification"
+            content: "PSCallbackAndVoicemailErrorNotification"
         });
         notificationSpy.mockClear();
     });

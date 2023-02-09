@@ -84,8 +84,6 @@ class CallbackService extends ApiService {
             queueSid,
             taskAttributes: outboundCallTaskAttributes,
           });
-
-          throw new Error("test error3");
         }
       } catch (e) {
         if (attempts < 5) {
@@ -93,12 +91,6 @@ class CallbackService extends ApiService {
           // this helps address them silently
           return await this.callCustomerBack(task, attempts + 1);
         } else {
-          Flex.Notifications.showNotification(
-            CallbackNotification.ErrorCallingCustomer,
-            {
-              customer: task.defaultFrom,
-            }
-          );
           ErrorManager.createAndProcessError("Could not create callback to customer", {
             type: FlexPluginErrorType.serverless,
             description: e instanceof Error ? `${e.message}` : "Could not create callback to customer",

@@ -1,5 +1,5 @@
 {
-    "name":"flex-callback-and-voicemail-plugin",
+    "name":"flex-plugin-library-callback-and-voicemail",
     "friendly_name" :"Callback And Voicemail Plugin",
     "description":"The feature works be registering custom flex channels for callbacks and voicemails.",
     "support":"abc@gmail.com",
@@ -11,7 +11,7 @@
       "compatible_with":"2.0.0 - 2.0.2",
       "released_by":"flex-runtime-team",
       "changelog":"",
-      "prerequisite" : "Studio flow should be configured for callback or voicemail",
+      "prerequisite" : "After installing the plugin, Studio flow should be configured for callback or voicemail using the deployed serverless functions.",
       "attributes" : [{
         "name": "TWILIO_FLEX_WORKSPACE_SID",
         "data_type": "string",

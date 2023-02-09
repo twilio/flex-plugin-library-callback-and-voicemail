@@ -1,3 +1,6 @@
+import * as Flex from "@twilio/flex-ui";
+import { CallbackNotification } from "../flex-hooks/notifications/Callback";
+
 export enum FlexPluginErrorType {
     action = "ActionFramework",
     serverless = "Serverless",
@@ -43,14 +46,13 @@ class ErrorManagerImpl {
     public processError(error: FlexPluginError): FlexPluginError {
         try {
             console.log(`Callback and Voicemail Plugin: ${error}\nType: ${error.content.type}\nContext:${error.content.context}`);
-            // const flexManager = window?.Twilio?.Flex?.Manager?.getInstance();
-            // flexManager.reportPluginInteraction({
-            //     name: 'CALLBACK_VOICEMAIL_PLUGIN_ERROR',
-            //     status: 'COMPLETE',
-            //     details: {
-            //         error: error
-            //     }
-            // });
+            
+            Flex.Notifications.showNotification(
+                CallbackNotification.ErrorCallBackAndVoicemail,
+                    {
+                        error: error
+                    }
+            );
         } catch (e) {
             // Do not throw, let's avoid Inceptions
         }

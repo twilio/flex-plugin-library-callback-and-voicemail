@@ -1,5 +1,5 @@
 {
-  "name": "serverless-callback-and-voicemail",
+  "name": "flex-plugin-library-callback-and-voicemail",
   "version": "0.0.0",
   "private": true,
   "scripts": {
