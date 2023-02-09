@@ -43,16 +43,17 @@ export class FlexPluginError extends Error {
 
 class ErrorManagerImpl {
 
-    public processError(error: FlexPluginError): FlexPluginError {
+    public processError(error: FlexPluginError, showNotification: boolean): FlexPluginError {
         try {
             console.log(`Callback and Voicemail Plugin: ${error}\nType: ${error.content.type}\nContext:${error.content.context}`);
-            
-            Flex.Notifications.showNotification(
-                CallbackNotification.ErrorCallBackAndVoicemail,
-                    {
-                        error: error
-                    }
-            );
+            if (showNotification) {
+                Flex.Notifications.showNotification(
+                    CallbackNotification.ErrorCallBackAndVoicemail,
+                        {
+                            error: error
+                        }
+                );
+            }
         } catch (e) {
             // Do not throw, let's avoid Inceptions
         }
@@ -60,9 +61,9 @@ class ErrorManagerImpl {
         return error;
     }
 
-    public createAndProcessError(message: string, content: FlexPluginErrorContents = {}): FlexPluginError {
+    public createAndProcessError(message: string, content: FlexPluginErrorContents = {}, showNotification: boolean = true): FlexPluginError {
         const error = new FlexPluginError(message, content);
-        return this.processError(error);
+        return this.processError(error, showNotification);
     }
 }
 
