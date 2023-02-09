@@ -1,0 +1,58 @@
+{
+    "name":"flex-plugin-library-callback-and-voicemail",
+    "friendly_name" :"Callback And Voicemail Plugin",
+    "description":"The feature works be registering custom flex channels for callbacks and voicemails.",
+    "support":"abc@gmail.com",
+    "created_by":"Twilio",
+    "twilio_managed":"true",
+    "repo_url" : "https://github.com/twilio/flex-plugin-library-callback-and-voicemail",
+    "version_details" : {
+      "version":"1.0.0",
+      "compatible_with":"2.0.0 - 2.0.2",
+      "released_by":"flex-runtime-team",
+      "changelog":"",
+      "prerequisite" : "After installing the plugin, Studio flow should be configured for callback or voicemail using the deployed serverless functions.",
+      "attributes" : [{
+        "name": "TWILIO_FLEX_WORKSPACE_SID",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "TaskRouter Workspace SID",
+        "help_link" : ""
+      },
+      {
+        "name": "TWILIO_FLEX_CALLBACK_WORKFLOW_SID",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Callback Workflow SID",
+        "help_link" : ""
+      },
+      {
+        "name": "TWILIO_SERVERLESS_API_CONCURRENCY",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Serverless API Concurrency",
+        "help_link" : ""
+      },
+      {
+        "name": "TWILIO_SERVICE_RETRY_LIMIT",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Serverless Retry Limit",
+        "help_link" : ""
+      },
+      {
+        "name": "TWILIO_SERVICE_MIN_BACKOFF",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Serverless mininum backoff",
+        "help_link" : ""
+      },
+      {
+        "name": "TWILIO_SERVICE_MAX_BACKOFF",
+        "data_type": "string",
+        "type":"SERVERLESS",
+        "description" : "Serverless maximum backoff",
+        "help_link" : ""
+      }]
+    }
+}
