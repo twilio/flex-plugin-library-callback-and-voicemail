@@ -1,4 +1,4 @@
-# Flex Callback And Aoicemail Plugin
+# Flex Callback And Voicemail Plugin
 
 ## How it works
 
@@ -12,7 +12,7 @@ the only difference between these functions is one is intended to be called from
 
 ## Callbacks and Voicemail
 
-This feature enables the use of callbacks and voicemails as a custom task type.  It is a generic version intended to accelerate the customization of such a feature for any particular project, providing the main parts of a callback feature in easy to understand and customizable way.
+This feature enables the use of callbacks and voicemails as a custom task type. It is a generic version intended to accelerate the customization of such a feature for any particular project, providing the main parts of a callback feature in easy to understand and customizable way.
 
 - the callbacks are placed on the voice channel by default, as its typical projects want callbacks to be threaded in single file with voice calls.
 - there is an API for creating the callback so you just have to create your customer experience then decide when to create the callback instead of peeling apart the sample solution.
@@ -31,12 +31,11 @@ voicemails will look like this
 
 ![alt text](src/screenshots/flex-user-experience-vm.gif)
 
-
 # Configuration
 
 ## Studio Configuration
 
-Creating a callback involves creating a task with at a minimum a number to callback and a number to call from.  A sample setup of that is shown here in a studio flow where a number has been wired up to immediately create a callback and hang up.
+Creating a callback involves creating a task with at a minimum a number to callback and a number to call from. A sample setup of that is shown here in a studio flow where a number has been wired up to immediately create a callback and hang up.
 
 ![alt text](src/screenshots/sample-triggering-callback.png)
 
@@ -48,18 +47,18 @@ here you can see three parameters which are populated from the studio flow
 
 This serverless function can be used from anywhere, not just the studio flow, to create a callback task.
 
-The creation of a task requires a workflow.  You may create a custom workflow, that uses some collected data to organize the tasks into different queues or maybe something more complex.  You may also just want to use the default "Assign To Anyone" workflow that is spawned on a vanilla flex instance.
+The creation of a task requires a workflow. You may create a custom workflow, that uses some collected data to organize the tasks into different queues or maybe something more complex. You may also just want to use the default "Assign To Anyone" workflow that is spawned on a vanilla flex instance.
 
-Once you have decided which workflow you are using, you simply reference it in the environment file for your serverless-functions and make sure it is deployed as well as ensuring the flag is set for the feature in flex-config and that, that is also deployed.  You now have a functioning callback feature!
+Once you have decided which workflow you are using, you simply reference it in the environment file for your serverless-functions and make sure it is deployed as well as ensuring the flag is set for the feature in flex-config and that, that is also deployed. You now have a functioning callback feature!
 
 the variable that you need to make sure is set is
->TWILIO_FLEX_CALLBACK_WORKFLOW_SID=WW....
+
+> TWILIO_FLEX_CALLBACK_WORKFLOW_SID=WW....
 
 Creating a voicemail involves the same setup as above, however the following additional parameters must be passed to the create-callback function from a Record Voicemail widget:
 
 - recordingSid: {{widgets.record_voicemail_1.RecordingSid}} - the recording SID from the Record Voicemail widget
 - recordingUrl: {{widgets.record_voicemail_1.RecordingUrl}} - the recording URL from the Record Voicemail widget
-
 
 # Flex Plugin
 
@@ -86,7 +85,7 @@ AUTH_TOKEN=
 TWILIO_API_KEY=
 TWILIO_API_SECRET=
 
-# GENERAL 
+# GENERAL
 TWILIO_FLEX_WORKSPACE_SID=
 TWILIO_SERVERLESS_API_CONCURRENCY=10
 TWILIO_SERVICE_RETRY_LIMIT=5

@@ -68,7 +68,7 @@ describe('ApiService', () => {
       try {
         await TestService.testFetchJsonWithReject('mockURL', {}, 0);
       } catch (e) {
-        expect(fetchSpy).toHaveBeenCalledTimes(11);
+        expect(fetchSpy).toHaveBeenCalledTimes(4);
       }
     });
   });

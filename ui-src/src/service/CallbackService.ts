@@ -84,6 +84,8 @@ class CallbackService extends ApiService {
             queueSid,
             taskAttributes: outboundCallTaskAttributes,
           });
+
+          throw new Error("test error3");
         }
       } catch (e) {
         if (attempts < 5) {
@@ -97,7 +99,7 @@ class CallbackService extends ApiService {
               customer: task.defaultFrom,
             }
           );
-          throw ErrorManager.createAndProcessError("Could not create callback to customer", {
+          ErrorManager.createAndProcessError("Could not create callback to customer", {
             type: FlexPluginErrorType.serverless,
             description: e instanceof Error ? `${e.message}` : "Could not create callback to customer",
             context: "Plugin.CallbackService",
@@ -133,13 +135,14 @@ class CallbackService extends ApiService {
         isDeleted: task.attributes.callBackData.isDeleted,
       };
 
+      console.log("creating callback for reque");
       let response = await this.createCallback(request);
 
       if (response.success) {
         await Flex.Actions.invokeAction("WrapupTask", { task });
       }
     } catch (e) {
-      throw ErrorManager.createAndProcessError("Could not reque callback to customer", {
+      ErrorManager.createAndProcessError("Could not reque callback to customer", {
         type: FlexPluginErrorType.serverless,
         description: e instanceof Error ? `${e.message}` : "Could not reque callback to customer",
         context: "Plugin.CallbackService",

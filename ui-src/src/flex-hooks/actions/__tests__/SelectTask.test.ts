@@ -1,7 +1,7 @@
 import * as Flex from "@twilio/flex-ui";
 import { autoSelectCallbackTaskWhenEndingCall } from '../SelectTask';
 import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../../../utils/ErrorManager";
-import { setFlexReduxState, setCustomReduxState } from '../../../../test-utils/flex-redux';
+import { setFlexReduxState, setCustomReduxState } from '../../../../../test-utils/flex-redux';
 
 describe('SelectTask', () => {
   

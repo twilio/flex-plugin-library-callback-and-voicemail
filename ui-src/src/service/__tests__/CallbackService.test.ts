@@ -1,7 +1,7 @@
 import CallbackService from '../CallbackService';
 import { CallbackNotification } from "../../flex-hooks/notifications/Callback";
 import * as Flex from "@twilio/flex-ui";
-import { setServiceConfiguration } from '../../../test-utils/flex-service-configuration';
+import { setServiceConfiguration } from '../../../../test-utils/flex-service-configuration';
 import { Actions } from "../../flex-hooks/states";
 import fetch from 'jest-fetch-mock';
 import { ErrorManager} from "../../utils/ErrorManager";

@@ -31,7 +31,7 @@ describe('Prepare Flex Function', () => {
 
     PrepareFunction.prepareFlexFunction(requiredParameters, mockHandlerFn);
     expect(spyMethod).toHaveBeenCalledTimes(1);
-    // expect(mockFunctionValidatorObject).toHaveBeenCalled();
+    expect(mockFunctionValidatorObject).toHaveBeenCalled();
   });
 });
 
@@ -57,7 +57,7 @@ describe('Prepare Function', () => {
     from: '+1xxxxxx',
   };
 
-  it('prepareFlexFunction is called successfully ', () => {
+  it('prepareFunction is called successfully ', () => {
     const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
     const requiredParameters = [
       { key: 'taskSid', purpose: 'unique ID of task to update' },
@@ -73,7 +73,7 @@ describe('Prepare Function', () => {
     PrepareFunction.prepareFunction(mockContext, mockEvent, mockCallbackObject, requiredParameters, mockHandlerFn);
   });
 
-  it('prepareFlexFunction returns error 400', () => {
+  it('prepareFunction returns error 400', () => {
     const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
     const requiredParameters = [
       { key: 'taskSid', purpose: 'unique ID of task to update' },
@@ -90,7 +90,7 @@ describe('Prepare Function', () => {
     PrepareFunction.prepareFunction(mockContext, mockEvent, mockCallbackObject, requiredParameters, mockHandlerFn);
   });
 
-  it('prepareFlexFunction error handler', () => {
+  it('prepareFunction error handler', () => {
     const PrepareFunction = require('../../../functions/helpers/prepare-function.private');
     const requiredParameters = [
       { key: 'taskSid', purpose: 'unique ID of task to update' },

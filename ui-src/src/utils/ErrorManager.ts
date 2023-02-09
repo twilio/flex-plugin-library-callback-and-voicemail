@@ -26,8 +26,6 @@ export class FlexPluginError extends Error {
 
     public time: Date;
 
-    public logManagerTimestamp: string | undefined;
-
     constructor(message: string, content: FlexPluginErrorContents = {}) {
         super(message);
         this.content = {
@@ -38,32 +36,21 @@ export class FlexPluginError extends Error {
         this.time = new Date();
         Object.setPrototypeOf(this, FlexPluginError.prototype);
     }
-
-    // public get logLine(): string {
-    //     const { description, context, wrappedError } = this.content;
-    //     const message = description || this.message;
-    //     let wrappedErrorDescription = "";
-
-    //     if (wrappedError) {
-    //         if (wrappedError instanceof Error && wrappedError.message) {
-    //             wrappedErrorDescription = `\n\nOriginal error:\n"${wrappedError.message}"`;
-    //         } else if (typeof wrappedError === "string") {
-    //             wrappedErrorDescription = `\n\nOriginal error:\n"${wrappedError}"`;
-    //         }
-    //     }
-    //     const contextString = !!context ? `- ${context}` : "";
-
-    //     return `${this.time.toLocaleString()} ${contextString}: ${message}${wrappedErrorDescription}`;
-    // }
 }
-
 
 class ErrorManagerImpl {
 
     public processError(error: FlexPluginError): FlexPluginError {
         try {
-            // log.error(error.logLine);
-            // Add telemetry code here
+            console.log(`Callback and Voicemail Plugin: ${error}\nType: ${error.content.type}\nContext:${error.content.context}`);
+            // const flexManager = window?.Twilio?.Flex?.Manager?.getInstance();
+            // flexManager.reportPluginInteraction({
+            //     name: 'CALLBACK_VOICEMAIL_PLUGIN_ERROR',
+            //     status: 'COMPLETE',
+            //     details: {
+            //         error: error
+            //     }
+            // });
         } catch (e) {
             // Do not throw, let's avoid Inceptions
         }

@@ -25,7 +25,7 @@ export default abstract class ApiService {
     if (!this.serverlessDomain)
       throw Error("serverless_functions_domain is not set env file");
     } catch (e) {
-      throw ErrorManager.createAndProcessError("Could not set serverless function domain", {
+      ErrorManager.createAndProcessError("Could not set serverless function domain", {
         type: FlexPluginErrorType.serverless,
         description: e instanceof Error ? `${e.message}` : "Could not set serverless function domain",
         context: "Plugin.ApiService",
@@ -65,7 +65,7 @@ export default abstract class ApiService {
         try {
           // Generic retry when calls return a 'too many requests' response
           // request is delayed by a random number which grows with the number of retries
-          if (error.status === 429 && attempts < 10) {
+          if (error.status === 429 && attempts < 3) {
             await delay(random(100, 750) + attempts * 100);
             return await this.fetchJsonWithReject<T>(url, config, attempts + 1);
           }
