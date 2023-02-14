@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "twilio flex:plugins:start",
-    "test": "jest",
     "postinstall": "flex-plugin pre-script-check"
   },
   "dependencies": {

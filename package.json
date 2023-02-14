@@ -5,8 +5,7 @@
   "scripts": {
     "preinstall": "cd ./ui-src && npm install",
     "test": "jest",
-    "build": "cd ui-src && twilio flex:plugins:build && cp build/** ../assets",
-    "deploy": "twilio flex:plugins:deploy"
+    "build": "cd ui-src && twilio flex:plugins:build && cp build/** ../assets"
   },
   "dependencies": {
     "@twilio-labs/serverless-runtime-types": "^1.1",
