@@ -1,59 +1,43 @@
 {
-  "name": "flex-callback-and-voicemail-plugin",
+  "name": "flex-plugin-library-callback-and-voicemail",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "twilio flex:plugins:start",
+    "preinstall": "cd ./ui-src && npm install",
     "test": "jest",
-    "postinstall": "flex-plugin pre-script-check"
+    "build": "cd ui-src && twilio flex:plugins:build && cp build/** ../assets"
   },
   "dependencies": {
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "@twilio-paste/core": "^17.2.0",
-    "@twilio-paste/icons": "^9.4.2",
-    "@twilio/flex-dev-utils": "^5.1.3",
-    "@twilio/flex-plugin-scripts": "6.0.3",
-    "@types/jest": "^26.0.20",
-    "lodash": "^4.17.20",
-    "luxon": "^3.1.1",
-    "rrule": "^2.7.1",
-    "tzdata": "^1.0.35"
+    "@twilio-labs/serverless-runtime-types": "^1.1",
+    "lodash": "^4.17.21",
+    "twilio": "^3.82.0",
+    "twilio-flex-token-validator": "^1.5.4"
   },
   "devDependencies": {
+    "@types/lodash": "4.14.182",
+    "axios": "0.27.2",
+    "copyfiles": "2.4.1",
+    "twilio-cli": "5.2.1",
+    "twilio-run": "3.4.2",
+    "typescript": "^3.9.4",
+    "luxon": "^3.1.1",
+    "jest": "^26.0.20",
+    "jest-fetch-mock": "3.0.3",
+    "jest-junit": "12.0.0",
+    "@babel/preset-env": "7.20.2",
+    "@babel/preset-react": "7.18.6",
+    "@babel/preset-typescript": "^7.12.1",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.4.3",
     "@twilio/flex-ui": "2.0.2",
-    "@types/luxon": "^3.1.0",
+    "@types/jest": "^26.0.20",
     "@types/react-redux": "^7.1.1",
-    "jest": "^26.0.20",
-    "jest-fetch-mock": "3.0.3",
-    "jest-junit": "12.0.0",
-    "react-test-renderer": "17.0.2",
-    "typescript": "^4"
+    "@types/luxon": "^3.1.0",
+    "react": "file:./ui-src/node_modules/react",
+    "react-dom": "file:./ui-src/node_modules/react-dom"
   },
-  "jest": {
-    "rootDir": ".",
-    "clearMocks": true,
-    "automock": false,
-    "testResultsProcessor": "jest-junit",
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "clover",
-      "cobertura"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/setupTests.js"
-    ]
-  },
-  "jest-junit": {
-    "outputDirectory": "./test-results"
+  "engines": {
+    "node": "14"
   }
 }
