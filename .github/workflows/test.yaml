@@ -1,11 +1,16 @@
-name: Build
+name: PR validator
 
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+    branches:
+      - main
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
