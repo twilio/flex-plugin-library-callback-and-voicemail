@@ -2,12 +2,15 @@ name: PR validator
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
     branches:
       - main
+    paths-ignore:
+      - 'assets/**'
   push:
     branches:
       - main
+    paths-ignore:
+      - 'assets/**'
 
 jobs:
   test:
@@ -17,7 +20,5 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - run: npm install -g twilio-cli
-      - run: twilio plugins:install @twilio-labs/plugin-flex
       - run: npm install
       - run: npm test
