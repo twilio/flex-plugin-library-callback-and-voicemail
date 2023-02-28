@@ -40,7 +40,7 @@ describe('Callback and Voicemail plugin', () => {
       
     it('should render correct snapshot for voicemail', () => {
         const wrapper = render(
-                <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask}/>
+                <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask}/>
         )
         expect(wrapper).toMatchSnapshot();
     });
@@ -61,7 +61,7 @@ describe('Callback and Voicemail plugin', () => {
         }
 
         const wrapper = render(
-                <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockCallbackTask}/>
+                <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockCallbackTask}/>
         )
         expect(wrapper).toMatchSnapshot();
     });
@@ -82,7 +82,7 @@ describe('Callback and Voicemail plugin', () => {
             }
         }
         const { getByTestId } = render(
-            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask} />
+            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )
         expect(getByTestId('retryBtn')).toBeDisabled();
     });
@@ -103,14 +103,14 @@ describe('Callback and Voicemail plugin', () => {
             }
         }
         const { getByTestId } = render(
-            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask} />
+            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )
         expect(getByTestId('callbackBtn')).toBeDisabled();
     });
 
     it('call button creates outbound call', async () => {
         const { getByTestId } = render(
-            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask} />
+            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )
         const callBtn = getByTestId('callbackBtn');
         expect(callBtn).toBeEnabled();
@@ -120,7 +120,7 @@ describe('Callback and Voicemail plugin', () => {
 
     it('retry button requeues callback ', async () => {
         const { getByTestId } = render(
-            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask} />
+            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )
         const retryBtn = getByTestId('retryBtn');
         expect(retryBtn).toBeEnabled();
@@ -137,7 +137,7 @@ describe('Callback and Voicemail plugin', () => {
         const expectedServerTimeShort = 'System time: ' + expectedTimeReceived.toLocaleString({ ...formatOptions, timeZone: mockTask.attributes!.callBackData?.mainTimeZone});
         
         const { getByText } = render(
-            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={5} task={mockTask} />
+            <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )
         
         expect(getByText(expectedLocalTimeShort)).toBeInTheDocument();
