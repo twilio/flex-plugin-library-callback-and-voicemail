@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "preinstall": "cd ./ui-src && npm install",
     "test": "jest",
     "build": "cd ui-src && twilio flex:plugins:build && cp build/** ../assets"
   },
@@ -11,7 +10,9 @@
     "@twilio-labs/serverless-runtime-types": "^1.1",
     "lodash": "^4.17.21",
     "twilio": "^3.82.0",
-    "twilio-flex-token-validator": "^1.5.4"
+    "twilio-flex-token-validator": "^1.5.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@types/lodash": "4.14.182",
@@ -34,8 +35,8 @@
     "@types/jest": "^26.0.20",
     "@types/react-redux": "^7.1.1",
     "@types/luxon": "^3.1.0",
-    "react": "file:./ui-src/node_modules/react",
-    "react-dom": "file:./ui-src/node_modules/react-dom"
+    "@twilio-paste/core": "^17.2.0",
+    "@twilio-paste/icons": "^9.4.2"
   },
   "engines": {
     "node": "14"
