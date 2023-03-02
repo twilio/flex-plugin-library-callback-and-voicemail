@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "build": "cd ui-src && twilio flex:plugins:build && cp build/** ../assets"
+    "build": "cd ui-src && twilio flex:plugins:build"
   },
   "dependencies": {
     "@twilio-labs/serverless-runtime-types": "^1.1",
