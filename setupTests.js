@@ -5,7 +5,6 @@ import { resetReduxState } from './test-utils/flex-redux';
 import { resetServiceConfiguration } from './test-utils/flex-service-configuration';
 
 process.env.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN = 'mockServerlessFunctionsDomain'
-jest.setTimeout(15000);
 
 // Global test lifecycle handlers
 beforeAll(() => {

@@ -79,3 +79,6 @@ test-results/
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# JUnit.xml
+junit.xml
