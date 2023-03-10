@@ -28,14 +28,14 @@ exports.handler = prepareFlexFunction(requiredParameters, async (context, event,
       conversation_id,
       message,
       utcDateTimeReceived,
-      recordingSid,
-      recordingUrl,
-      transcriptSid,
-      transcriptText,
+      RecordingSid,
+      RecordingUrl,
+      TranscriptionSid,
+      TranscriptionText,
       isDeleted,
       taskChannel: overriddenTaskChannel,
     } = event;
-    
+
     // use assigned values or use defaults
     const workflowSid =
       overriddenWorkflowSid || process.env.TWILIO_FLEX_CALLBACK_WORKFLOW_SID;
@@ -46,8 +46,8 @@ exports.handler = prepareFlexFunction(requiredParameters, async (context, event,
     
     // setup required task attributes for task
     const attributes = {
-      taskType: recordingSid ? "voicemail" : "callback",
-      name: (recordingSid ? "Voicemail" : "Callback") + ` (${numberToCall})`,
+      taskType: RecordingSid ? "voicemail" : "callback",
+      name: (RecordingSid ? "Voicemail" : "Callback") + ` (${numberToCall})`,
       flow_execution_sid: flexFlowSid,
       message: message || null,
       callBackData: {
@@ -56,10 +56,10 @@ exports.handler = prepareFlexFunction(requiredParameters, async (context, event,
         attempts,
         mainTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         utcDateTimeReceived: utcDateTimeReceived || new Date(),
-        recordingSid,
-        recordingUrl,
-        transcriptSid,
-        transcriptText,
+        RecordingSid,
+        RecordingUrl,
+        TranscriptionSid,
+        TranscriptionText,
         isDeleted: isDeleted || false,
       },
       direction: "inbound",

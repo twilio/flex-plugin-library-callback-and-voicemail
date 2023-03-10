@@ -104,8 +104,8 @@ describe('requeueCallback', () => {
                 numberToCallFrom: "+122",
                 attempts: 0,
                 utcDateTimeReceived: "2023-01-24T12:43:30.865Z",
-                recordingSid: "REb8351f9697eb9f29341a8353dd6c52b0",
-                recordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACxxx/Recordings/RExxx",
+                RecordingSid: "REb8351f9697eb9f29341a8353dd6c52b0",
+                RecordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACxxx/Recordings/RExxx",
                 isDeleted: false
             },
             flow_execution_sid: "FWxxx",
@@ -125,7 +125,7 @@ describe('requeueCallback', () => {
     });
 
     it('invokes WrapupTask action on successful callback creation', async () => {
-        const createCallbackSpy = jest.spyOn(CallbackService, 'createCallback').mockImplementation(() => ({ 'success':true }));
+        jest.spyOn(CallbackService, 'createCallback').mockImplementation(() => ({ 'success':true }));
         const actionSpy = jest.spyOn(Flex.Actions, 'invokeAction');
         await CallbackService.requeueCallback(mockTask);
         expect(actionSpy).toHaveBeenCalledWith('WrapupTask', { task: mockTask });

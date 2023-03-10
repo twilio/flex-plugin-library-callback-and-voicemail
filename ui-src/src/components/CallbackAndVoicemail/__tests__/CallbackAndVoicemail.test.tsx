@@ -23,7 +23,7 @@ const mockTask = {
         callBackData: {
             attempts: 0,
             mainTimeZone: "UTC",
-            recordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
+            RecordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
             isDeleted: false,
             numberToCall: "111",
             utcDateTimeReceived: "2023-01-22T07:06:18.928Z"
@@ -41,6 +41,28 @@ describe('Callback and Voicemail plugin', () => {
     it('should render correct snapshot for voicemail', () => {
         const wrapper = render(
                 <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask}/>
+        )
+        expect(wrapper).toMatchSnapshot();
+    });
+
+    it('should render correct snapshot for transcription text', () => {
+        const mockTranscriptTask = { 
+            taskStatus: 'assigned',
+            attributes: {
+                taskType: "voicemail",
+                callBackData: {
+                    attempts: 0,
+                    mainTimeZone: "UTC",
+                    RecordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
+                    isDeleted: false,
+                    numberToCall: "111",
+                    utcDateTimeReceived: "2023-01-22T07:06:18.928Z",
+                    TranscriptionText: "Test transcription text"
+                }
+            }
+        }
+        const wrapper = render(
+                <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTranscriptTask}/>
         )
         expect(wrapper).toMatchSnapshot();
     });
@@ -75,7 +97,7 @@ describe('Callback and Voicemail plugin', () => {
                     utcDateTimeReceived: "2023-01-20T05:15:10.666Z",
                     attempts: 0,
                     mainTimeZone: "UTC",
-                    recordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
+                    RecordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
                     isDeleted: false,
                     numberToCall: "111"
                 }
@@ -96,7 +118,7 @@ describe('Callback and Voicemail plugin', () => {
                     utcDateTimeReceived: "2023-01-20T05:15:10.666Z",
                     attempts: 0,
                     mainTimeZone: "UTC",
-                    recordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
+                    RecordingUrl: "https://api.twilio.com/2010-04-01/Accounts/ACf688a0f5957274af34831c0b5e0cdbaa/Recordings/RE13186709605f710e008c1fe04541f469",
                     isDeleted: false,
                     numberToCall: "+111"
                 }
@@ -129,7 +151,6 @@ describe('Callback and Voicemail plugin', () => {
     });
 
     it('displays time correctly', async () => {
-        const locale = navigator.languages[0];
         const expectedTimeReceived = DateTime.fromISO(mockTask.attributes!.callBackData!.utcDateTimeReceived);
         const formatOptions = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' } as Intl.DateTimeFormatOptions;
         const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;

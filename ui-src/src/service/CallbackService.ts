@@ -24,10 +24,10 @@ export interface CreateCallbackRequest {
   conversation_id?: string;
   message?: string;
   utcDateTimeReceived?: string;
-  recordingSid?: string;
-  recordingUrl?: string;
-  transcriptSid?: string;
-  transcriptText?: string;
+  RecordingSid?: string;
+  RecordingUrl?: string;
+  TranscriptionSid?: string;
+  TranscriptionText?: string;
   isDeleted?: boolean;
 }
 
@@ -120,10 +120,10 @@ class CallbackService extends ApiService {
         utcDateTimeReceived: task.attributes.callBackData.utcDateTimeReceived
           ? task.attributes.callBackData.utcDateTimeReceived
           : new Date(),
-        recordingSid: task.attributes.callBackData.recordingSid,
-        recordingUrl: task.attributes.callBackData.recordingUrl,
-        transcriptSid: task.attributes.callBackData.transcriptSid,
-        transcriptText: task.attributes.callBackData.transcriptText,
+        RecordingSid: task.attributes.callBackData.RecordingSid,
+        RecordingUrl: task.attributes.callBackData.RecordingUrl,
+        TranscriptionSid: task.attributes.callBackData.TranscriptionSid,
+        TranscriptionText: task.attributes.callBackData.TranscriptionText,
         isDeleted: task.attributes.callBackData.isDeleted,
       };
 
@@ -174,17 +174,17 @@ class CallbackService extends ApiService {
       utcDateTimeReceived: request.utcDateTimeReceived
         ? encodeURIComponent(request.utcDateTimeReceived)
         : undefined,
-      recordingSid: request.recordingSid
-        ? encodeURIComponent(request.recordingSid)
+      RecordingSid: request.RecordingSid
+        ? encodeURIComponent(request.RecordingSid)
         : undefined,
-      recordingUrl: request.recordingUrl
-        ? encodeURIComponent(request.recordingUrl)
+      RecordingUrl: request.RecordingUrl
+        ? encodeURIComponent(request.RecordingUrl)
         : undefined,
-      transcriptSid: request.transcriptSid
-        ? encodeURIComponent(request.transcriptSid)
+      TranscriptionSid: request.TranscriptionSid
+        ? encodeURIComponent(request.TranscriptionSid)
         : undefined,
-      transcriptText: request.transcriptText
-        ? encodeURIComponent(request.transcriptText)
+      TranscriptionText: request.TranscriptionText
+        ? encodeURIComponent(request.TranscriptionText)
         : undefined,
       isDeleted: request.isDeleted
         ? encodeURIComponent(request.isDeleted)
