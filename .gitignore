@@ -34,6 +34,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+node_modules
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -61,18 +62,28 @@ typings/
 .next
 
 # Flex related ignore
-appConfig.js
 pluginsService.js
 build/
 
-package-lock.json
 
-# serverless
-.twilio-functions
-.twiliodeployinfo
+# JUnit.xml
+junit.xml
 
-#jest
-test-results/
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### macOS ###
 # General
@@ -80,5 +91,66 @@ test-results/
 .AppleDouble
 .LSOverride
 
-# JUnit.xml
-junit.xml
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+#jest
+test-results/
+
+# serverless
+.twilio-functions
+.twiliodeployinfo
+
+# vscode
+.vscode
+.idea
+
+appConfig.js
+
+package-lock.json

@@ -36,10 +36,10 @@ describe('Create callback', () => {
         conversation_id: "ID",
         message: "message",
         utcDateTimeReceived: null,
-        recordingSid: null,
-        recordingUrl: null,
-        transcriptSid: null,
-        transcriptText: null,
+        RecordingSid: null,
+        RecordingUrl: null,
+        TranscriptionSid: null,
+        TranscriptionText: null,
         isDeleted: false,
         taskChannel: "TCxxx"
     };

@@ -36,7 +36,7 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
   const { taskType, callBackData } = task?.attributes as TaskAttributes
   const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
   let timeReceived;
-  
+
   if (callBackData?.utcDateTimeReceived) {
     timeReceived = DateTime.fromISO(callBackData?.utcDateTimeReceived);
   } else {
@@ -68,17 +68,17 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
         </Box>
       }      
       
-      {callBackData.recordingUrl && !callBackData.isDeleted &&
+      {callBackData.RecordingUrl && !callBackData.isDeleted &&
         <Box element="C_AND_V_CONTENT_BOX">
           <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">Voicemail recording</Heading>
-          <Text as="span"><audio src={callBackData.recordingUrl} controls /></Text>
+          <Text as="span"><audio src={callBackData.RecordingUrl} controls data-testid="voicemailRecording"/></Text>
         </Box>
       }    
       
-      {callBackData.transcriptText && !callBackData.isDeleted &&
+      {callBackData.TranscriptionText && !callBackData.isDeleted &&
           <Box element="C_AND_V_CONTENT_BOX">
             <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">Voicemail transcript</Heading>
-            <Text as="span">{callBackData.transcriptText}</Text>
+            <Text as="span">{callBackData.TranscriptionText}</Text>
           </Box>
         }
       

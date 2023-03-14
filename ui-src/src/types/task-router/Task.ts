@@ -55,10 +55,10 @@ export interface TaskAttributes {
     attempts?: number;
     mainTimeZone?: string;
     utcDateTimeReceived?: string;
-    recordingSid?: string;
-    recordingUrl?: string;
-    transcriptSid?: string;
-    transcriptText?: string;
+    RecordingSid?: string;
+    RecordingUrl?: string;
+    TranscriptionSid?: string;
+    TranscriptionText?: string;
     isDeleted?: boolean;
   };
 
