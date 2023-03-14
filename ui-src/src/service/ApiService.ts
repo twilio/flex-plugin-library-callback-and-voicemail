@@ -1,7 +1,7 @@
-import * as Flex from "@twilio/flex-ui";
-import { EncodedParams } from "../types/serverless";
-import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from "../utils/ErrorManager";
-import { random } from "lodash";
+import * as Flex from '@twilio/flex-ui';
+import { EncodedParams } from '../types/serverless';
+import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from '../utils/ErrorManager';
+import { random } from 'lodash';
 
 function delay<T>(ms: number, result?: T) {
   return new Promise((resolve) => setTimeout(() => resolve(result), ms));
@@ -10,29 +10,25 @@ function delay<T>(ms: number, result?: T) {
 export default abstract class ApiService {
   protected manager = Flex.Manager.getInstance();
   readonly serverlessDomain: string;
-  readonly serverlessProtocol: string;
 
   constructor() {
     // use serverless_functions_domain from ui_attributes, or .env or set as undefined
 
-    this.serverlessProtocol = "https";
-    this.serverlessDomain = "";
+    this.serverlessDomain = '';
 
     try {
       if (process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
-      this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
+        this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
 
-    if (!this.serverlessDomain)
-      throw Error("serverless_functions_domain is not set env file");
+      if (!this.serverlessDomain) throw Error('serverless_functions_domain is not set env file');
     } catch (e) {
-      ErrorManager.createAndProcessError("Could not set serverless function domain", {
+      ErrorManager.createAndProcessError('Could not set serverless function domain', {
         type: FlexPluginErrorType.serverless,
-        description: e instanceof Error ? `${e.message}` : "Could not set serverless function domain",
-        context: "Plugin.ApiService",
-        wrappedError: e
-    });
+        description: e instanceof Error ? `${e.message}` : 'Could not set serverless function domain',
+        context: 'Plugin.ApiService',
+        wrappedError: e,
+      });
     }
-    
   }
 
   protected buildBody(encodedParams: EncodedParams): string {
@@ -44,14 +40,10 @@ export default abstract class ApiService {
         return `${result}&${paramName}=${encodedParams[paramName]}`;
       }
       return `${paramName}=${encodedParams[paramName]}`;
-    }, "");
+    }, '');
   }
 
-  protected fetchJsonWithReject<T>(
-    url: string,
-    config: RequestInit,
-    attempts = 0
-  ): Promise<T> {
+  protected fetchJsonWithReject<T>(url: string, config: RequestInit, attempts = 0): Promise<T> {
     return fetch(url, config)
       .then((response) => {
         if (!response.ok) {
