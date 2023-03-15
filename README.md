@@ -20,18 +20,17 @@ This feature enables the use of callbacks and voicemails as a custom task type. 
 - there is an API for creating the callback so you just have to create your customer experience then decide when to create the callback instead of peeling apart the sample solution.
 - [creating a callback](./serverless/src/functions/callback/studio/create-callback.protected.js#L68) has a little more resiliency built in as it uses a retry handler.
 - callbacks and voicemails use a shared set of components and functions, as voicemails are effectively callbacks with a voicemail recording attached
-- maximum attempts are configurable
 - the callback task can be automatically selected after the outbound call back to the contact ends.
 
 # flex-user-experience
 
 the vanilla feature without any further customizations will look like this for callbacks
 
-![alt text](src/screenshots/flex-user-experience.gif)
+![alt text](screenshots/flex-user-experience.gif)
 
 voicemails will look like this
 
-![alt text](src/screenshots/flex-user-experience-vm.gif)
+![alt text](screenshots/1.gif)
 
 # Configuration
 
@@ -39,7 +38,7 @@ voicemails will look like this
 
 Creating a callback involves creating a task with at a minimum a number to callback and a number to call from. A sample setup of that is shown here in a studio flow where a number has been wired up to immediately create a callback and hang up.
 
-![alt text](src/screenshots/sample-triggering-callback.png)
+![alt text](screenshots/sample-triggering-callback.png)
 
 here you can see three parameters which are populated from the studio flow
 
