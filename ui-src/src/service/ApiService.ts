@@ -12,15 +12,13 @@ export default abstract class ApiService {
   readonly serverlessDomain: string;
 
   constructor() {
-    // use serverless_functions_domain from ui_attributes, or .env or set as undefined
-
     this.serverlessDomain = '';
 
     try {
-      if (process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN)
-        this.serverlessDomain = process.env?.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN;
+      this.serverlessDomain =
+        process.env.FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN || '<FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN>';
 
-      if (!this.serverlessDomain) throw Error('serverless_functions_domain is not set env file');
+      if (!this.serverlessDomain) throw Error('serverless_functions_domain is not set');
     } catch (e) {
       ErrorManager.createAndProcessError('Could not set serverless function domain', {
         type: FlexPluginErrorType.serverless,
