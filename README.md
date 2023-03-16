@@ -26,11 +26,11 @@ This feature enables the use of callbacks and voicemails as a custom task type. 
 
 the vanilla feature without any further customizations will look like this for callbacks
 
-![alt text](screenshots/flex-user-experience.gif)
+![alt text](./screenshots/callback.gif)
 
 voicemails will look like this
 
-![alt text](screenshots/1.gif)
+![alt text](./screenshots/1.gif)
 
 # Configuration
 
