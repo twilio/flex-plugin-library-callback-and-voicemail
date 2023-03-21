@@ -14,7 +14,7 @@ The only difference between these functions is one is intended to be called from
 
 Creating a callback involves creating a task with at a minimum a number to callback and a number to call from. A sample setup of that is shown here in a studio flow where a number has been wired up to immediately create a callback and hang up.
 
-![Studio configuration](./screenshots/sample-triggering-callback.png)
+![Studio configuration](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/main/screenshots/sample-triggering-callback.png)
 
 Here you can see three parameters which are populated from the studio flow
 
