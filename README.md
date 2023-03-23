@@ -24,21 +24,25 @@ This feature enables the use of callbacks and voicemails as a custom task type. 
 
 # flex-user-experience
 
-the vanilla feature without any further customizations will look like this for callbacks
+The vanilla feature without any further customizations will look like this for callbacks
 
-![alt text](./screenshots/callback.gif)
+![Callback demo](./screenshots/callback.gif)
 
-voicemails will look like this
+Voicemails will look like this
 
-![alt text](./screenshots/1.gif)
+![Voicemail demo](./screenshots/voicemail.gif)
 
-# Configuration
+Voicemails with transcription will look like this
 
-## Studio Configuration
+![Voicemail with transcription demo](./screenshots/1.gif)
+
+# Studio Configuration
+
+## Creating a Callback Task Using _create-callback_ Function
 
 Creating a callback involves creating a task with at a minimum a number to callback and a number to call from. A sample setup of that is shown here in a studio flow where a number has been wired up to immediately create a callback and hang up.
 
-![alt text](screenshots/sample-triggering-callback.png)
+![Studio configuration for callback](screenshots/studio_configuration_callback.png)
 
 here you can see three parameters which are populated from the studio flow
 
@@ -50,16 +54,30 @@ This serverless function can be used from anywhere, not just the studio flow, to
 
 The creation of a task requires a workflow. You may create a custom workflow, that uses some collected data to organize the tasks into different queues or maybe something more complex. You may also just want to use the default "Assign To Anyone" workflow that is spawned on a vanilla flex instance.
 
-Once you have decided which workflow you are using, you simply reference it in the environment file for your serverless-functions and make sure it is deployed as well as ensuring the flag is set for the feature in flex-config and that, that is also deployed. You now have a functioning callback feature!
-
-the variable that you need to make sure is set is
+Once you have decided which workflow you are using, you simply reference it in the environment file for your serverless-functions and make sure it is deployed. The variable that you need to make sure is set is
 
 > TWILIO_FLEX_CALLBACK_WORKFLOW_SID=WW....
+
+## Voicemail Additional Parameters
+
+![Studio configuration for voicemail](./screenshots/studio_configuration_voicemail.png)
 
 Creating a voicemail involves the same setup as above, however the following additional parameters must be passed to the create-callback function from a Record Voicemail widget:
 
 - RecordingSid: {{widgets.record_voicemail_1.RecordingSid}} - the recording SID from the Record Voicemail widget
 - RecordingUrl: {{widgets.record_voicemail_1.RecordingUrl}} - the recording URL from the Record Voicemail widget
+
+## Using Transcriptions in Voicemail Tasks
+
+![Studio configuration for transcription](./screenshots/studio_configuration_transcript.png)
+
+If you wish to enable transcriptions and show the transcription text on the voicemail task, you can invoke the create-callback function from the Transcription Callback URL on the Record Voicemail widget. Just be sure to include the required params in the URL. e.g.
+
+`https://flex-plugin-library-callback-and-voicemail1-xxx.twil.io/callback/studio/create-callback?numberToCall={{trigger.call.From | url_encode}}&numberToCallFrom={{trigger.call.To | url_encode}}&flexFlowSid={{flow.sid}}`
+
+NOTE: `RecordingSid` and `RecordingUrl` are already part of the transcription callback event, along with `TranscriptionSid` and `TranscriptionText`. The use of the `url_encode` [Liquid Template Filter](https://www.twilio.com/docs/studio/user-guide/liquid-template-language#standard-filters) allows the leading '+' of the to/from phone numbers to be preserved.
+
+If you do go with the transcription approach, the plugin will take care of rendering the transcription text below the playback controls for the recording - per the screenshot animation above.
 
 # Flex Plugin
 
