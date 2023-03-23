@@ -14,7 +14,7 @@ The only difference between these functions is one is intended to be called from
 
 Creating a callback involves creating a task with at a minimum a number to callback and a number to call from. A sample setup of that is shown here in a studio flow where a number has been wired up to immediately create a callback and hang up.
 
-![Studio configuration](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/update-readme/screenshots/studio_configuration_callback.png)
+![Studio configuration](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/main/screenshots/studio_configuration_callback.png)
 
 Here you can see three parameters which are populated from the studio flow
 
@@ -28,7 +28,7 @@ The creation of a task requires a workflow. You may create a custom workflow, th
 
 ### Voicemail Additional Parameters
 
-![Studio configuration for voicemail](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/update-readme/screenshots/studio_configuration_voicemail.png)
+![Studio configuration for voicemail](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/main/screenshots/studio_configuration_voicemail.png)
 
 Creating a voicemail involves the same setup as above, however the following additional parameters must be passed to the create-callback function from a Record Voicemail widget:
 
@@ -37,7 +37,7 @@ Creating a voicemail involves the same setup as above, however the following add
 
 ### Using Transcriptions in Voicemail Tasks
 
-![Studio configuration for transcription](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/update-readme/screenshots/studio_configuration_transcript.png)
+![Studio configuration for transcription](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/main/screenshots/studio_configuration_transcript.png)
 
 If you wish to enable transcriptions and show the transcription text on the voicemail task, you can invoke the create-callback function from the Transcription Callback URL on the Record Voicemail widget. Just be sure to include the required params in the URL. e.g.
 
