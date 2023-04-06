@@ -16,7 +16,7 @@ Three parameters are passed to the deployed `create-callback` serverless functio
 
 Note: After the plugin is installed and the serverless function is deployed, it can be used from anywhere, not just the studio flow, to create a callback task.
 
-The Studio flow needs the FUNCTION URL parameter which you can get from [Twilio Console > Functions and Assets > Services](https://console.twilio.com/us1/develop/functions/services) > plibo-queued-callback-and-voicemail > Functions > /callback/flex/create-callback > dots menu > Copy URL. Refer screenshot below.
+The Studio flow needs the FUNCTION URL parameter which you can get from [Twilio Console > Functions and Assets > Services](https://console.twilio.com/us1/develop/functions/services) > plibo-queued-callback-and-voicemail > Functions > /callback/studio/create-callback > dots menu > Copy URL. Refer screenshot below.
 ![Functions URL](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/main/screenshots/function_url.png)
 
 ### Voicemail Additional Parameters
