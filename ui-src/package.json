@@ -1,6 +1,7 @@
 {
   "name": "flex-plugin-library-callback-and-voicemail",
   "version": "0.0.0",
+  "id": "plibo-queued-callback-and-voicemail",
   "private": true,
   "scripts": {
     "start": "twilio flex:plugins:start",
