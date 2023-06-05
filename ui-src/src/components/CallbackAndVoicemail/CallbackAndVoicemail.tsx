@@ -13,6 +13,7 @@ import { TaskAttributes } from '../../types/task-router/Task';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState, reduxNamespace } from '../../flex-hooks/states'
 import { Actions } from "../../flex-hooks/states"
+import Analytics, { Event } from '../../utils/Analytics';
 
 
 type CallbackAndVoicemailProps = {
@@ -71,7 +72,18 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
       {callBackData.RecordingUrl && !callBackData.isDeleted &&
         <Box element="C_AND_V_CONTENT_BOX">
           <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">Voicemail recording</Heading>
-          <Text as="span"><audio src={callBackData.RecordingUrl} controls data-testid="voicemailRecording"/></Text>
+          <Text as="span">
+            <audio 
+              onPlay={() => {
+                Analytics.track(Event.VOICEMAIL_PLAYED, {
+                  taskSid: task.taskSid
+                });
+              }}
+              src={callBackData.RecordingUrl} 
+              controls 
+              data-testid="voicemailRecording"
+            />
+          </Text>
         </Box>
       }    
       

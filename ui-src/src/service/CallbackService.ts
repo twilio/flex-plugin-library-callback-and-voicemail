@@ -5,6 +5,7 @@ import { EncodedParams } from '../types/serverless';
 import { TaskAttributes } from '../types/task-router/Task';
 import { CallbackNotification } from '../flex-hooks/notifications/Callback';
 import { Actions } from '../flex-hooks/states';
+import Analytics, { Event } from '../utils/Analytics';
 
 export interface CreateCallbackResponse {
   success: boolean;
@@ -72,6 +73,10 @@ class CallbackService extends ApiService {
             callerId,
             queueSid,
             taskAttributes: outboundCallTaskAttributes,
+          });
+
+          Analytics.track(Event.CALLBACK_STARTED, {
+            taskSid: task.taskSid
           });
         }
       } catch (e) {
