@@ -28,7 +28,7 @@ type PagePropertiesType = {
 
 type Parameters = [string, Record<string, any>, Record<string, any>, (() => void) | undefined];
 
-enum Method {
+export enum Method {
   PAGE = 'page',
   TRACK = 'track',
   IDENTIFY = 'identify',

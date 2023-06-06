@@ -9,9 +9,9 @@ describe('Analytics', () => {
   const mockCommonProperties = {
     accountSid: '',
     flexUiVersion: '2.1.1',
-    originalPluginName: 'plibo-dialpad-addon-conference',
-    plugin: 'flex-plugin-library-conference',
-    pluginVersion: '1.0.0',
+    originalPluginName: 'plibo-queued-callback-and-voicemail',
+    plugin: 'flex-plugin-library-callback-and-voicemail',
+    pluginVersion: '0.0.0',
     product: 'Flex',
     workerSid: '',
   };
