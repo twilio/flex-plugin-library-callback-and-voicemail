@@ -145,7 +145,7 @@ class Analytics {
           method,
           params,
         },
-        '*',
+        window.parent.origin,
       );
     }
   }
