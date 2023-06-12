@@ -10,7 +10,7 @@ describe('Analytics', () => {
     accountSid: '',
     flexUiVersion: '2.1.1',
     originalPluginName: 'plibo-queued-callback-and-voicemail',
-    plugin: 'flex-plugin-library-callback-and-voicemail',
+    plugin: 'plibo-queued-callback-and-voicemail',
     pluginVersion: '0.0.0',
     product: 'Flex',
     workerSid: '',
