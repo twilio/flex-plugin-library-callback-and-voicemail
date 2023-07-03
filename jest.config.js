@@ -1,10 +1,8 @@
 module.exports = {
   rootDir: '.',
-  clearMocks: true,
-  setupFilesAfterEnv: [
-    "<rootDir>/setupTests.js"
-  ],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  modulePathIgnorePatterns: ['<rootDir>/dist'],
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   coverageDirectory: './coverage/',
   collectCoverage: true,
@@ -12,8 +10,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '.*\\.d\\.ts',
     '/components/.*./index\\.ts',
-    'polyfilled\\.ts',
-    'createAction.ts',
     'jest.config.js',
     'webpack.*\\.js',
     './coverage',
@@ -24,15 +20,13 @@ module.exports = {
     '/utils',
     '/build',
     'assets',
-  ],
-  "roots": [
-    "<rootDir>"
-  ],
-  "modulePaths": [
-    "<rootDir>"
+    './functions/setup.js',
+    '/redux',
   ],
   coverageReporters: ['json', 'lcov', 'text', 'clover', 'cobertura'],
   testResultsProcessor: 'jest-junit',
   reporters: ['default', 'jest-junit'],
-  testTimeout: 15000
-}
+  clearMocks: true,
+  automock: false,
+  testTimeout: 15000,
+};

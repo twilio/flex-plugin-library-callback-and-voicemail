@@ -1,5 +1,5 @@
 import * as Flex from '@twilio/flex-ui';
-import { UIAttributes } from '../ui-src/types/ServiceConfiguration';
+import { UIAttributes } from '../src/types/ServiceConfiguration';
 import { mergeWith, unset } from 'lodash';
 
 // NOTE: Not sure a great way to "set" the Flex serviceConfiguration value per test
