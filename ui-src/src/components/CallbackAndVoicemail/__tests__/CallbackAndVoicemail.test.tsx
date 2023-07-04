@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 import CallbackService from '../../../service/CallbackService';
 import { DateTime } from 'luxon';
 
-jest.mock('../../../service/CallbackService');
 
 jest.mock('react-redux', () => ({
   useSelector: () => ({
@@ -131,6 +130,7 @@ describe('Callback and Voicemail plugin', () => {
     });
 
     it('call button creates outbound call', async () => {
+        jest.spyOn(CallbackService,'callCustomerBack').mockImplementation(()=>{})
         const { getByTestId } = render(
             <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )
@@ -141,6 +141,7 @@ describe('Callback and Voicemail plugin', () => {
     });
 
     it('retry button requeues callback ', async () => {
+        jest.spyOn(CallbackService,'requeueCallback').mockImplementation(()=>{})
         const { getByTestId } = render(
             <CallbackAndVoicemail key="callback-component" allowRequeue={true} maxAttempts={3} task={mockTask} />
         )

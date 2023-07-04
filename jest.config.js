@@ -1,6 +1,7 @@
 module.exports = {
   rootDir: '.',
   clearMocks: true,
+  automock:false,
   setupFilesAfterEnv: [
     "<rootDir>/setupTests.js"
   ],
@@ -11,9 +12,7 @@ module.exports = {
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
   coveragePathIgnorePatterns: [
     '.*\\.d\\.ts',
-    '/components/.*./index\\.ts',
-    'polyfilled\\.ts',
-    'createAction.ts',
+    'index\\.ts',
     'jest.config.js',
     'webpack.*\\.js',
     './coverage',
@@ -24,6 +23,8 @@ module.exports = {
     '/utils',
     '/build',
     'assets',
+    './functions/setup.js',
+    '/redux',
   ],
   "roots": [
     "<rootDir>"

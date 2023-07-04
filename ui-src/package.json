@@ -1,11 +1,13 @@
 {
   "name": "plibo-queued-callback-and-voicemail",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "id": "plibo-queued-callback-and-voicemail",
   "private": true,
   "scripts": {
-    "start": "twilio flex:plugins:start",
-    "postinstall": "flex-plugin pre-script-check"
+    "prebuild": "rimraf build && npm run bootstrap",
+    "postinstall": "flex-plugin pre-script-check",
+    "prestart": "npm run bootstrap",
+    "test": "jest"
   },
   "dependencies": {
     "react": "17.0.2",
