@@ -1,9 +1,5 @@
 import Analytics, { Method } from '../Analytics';
 
-jest.mock('@twilio/flex-ui', () => ({
-  __esModule: true,
-  VERSION: '2.1.1',
-}));
 
 describe('Analytics', () => {
   const mockCommonProperties = {
@@ -11,7 +7,7 @@ describe('Analytics', () => {
     flexUiVersion: '2.1.1',
     originalPluginName: 'plibo-queued-callback-and-voicemail',
     plugin: 'plibo-queued-callback-and-voicemail',
-    pluginVersion: '0.0.0',
+    pluginVersion: '1.0.0',
     product: 'Flex',
     workerSid: '',
   };
