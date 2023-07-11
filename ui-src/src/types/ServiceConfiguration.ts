@@ -1,6 +1,5 @@
 import * as Flex from '@twilio/flex-ui';
 
-
 export default interface CallbackAndVoicemailConfig {
   enabled: boolean;
   allow_requeue: boolean;
@@ -17,7 +16,6 @@ export interface UIAttributes extends FlexUIAttributes {
     serverless_functions_port: string;
     features: {
       callbacks: CallbackAndVoicemailConfig;
-    }
+    };
   };
 }
-

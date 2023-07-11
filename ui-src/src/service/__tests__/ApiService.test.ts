@@ -16,7 +16,7 @@ class Test extends ApiService {
     return this.buildBody(encodedParams);
   }
 
-  testFetchJsonWithReject<T>(url: string, config: RequestInit, attempts: number): Promise<T>{
+  testFetchJsonWithReject<T>(url: string, config: RequestInit, attempts: number): Promise<T> {
     return this.fetchJsonWithReject(url, config, attempts);
   }
 }
@@ -29,7 +29,9 @@ describe('ApiService', () => {
   });
 
   it('should provide access to the configured serverless domain', () => {
-    const { serviceConfiguration: { ui_attributes } } = Flex.Manager.getInstance();
+    const {
+      serviceConfiguration: { ui_attributes },
+    } = Flex.Manager.getInstance();
     const { serverless_functions_domain } = ui_attributes as UIAttributes;
     expect(TestService.serverlessDomain).toBe(serverless_functions_domain);
   });
@@ -38,7 +40,7 @@ describe('ApiService', () => {
     const encodedParams: EncodedParams = {
       testParam1: encodeURIComponent('testParam1ToBeEncoded'),
       testParam2: encodeURIComponent('testParam2ToBeEncoded'),
-      testParamToDrop: undefined
+      testParamToDrop: undefined,
     };
 
     const body = TestService.testBuildBody(encodedParams);
@@ -48,7 +50,7 @@ describe('ApiService', () => {
 
   describe('fetchJsonWithReject', () => {
     it('should return json response', async () => {
-      fetch.mockResponse(JSON.stringify({ 'data': 'Mock data' }));
+      fetch.mockResponse(JSON.stringify({ data: 'Mock data' }));
       const res = await TestService.testFetchJsonWithReject('mockURL', {}, 0);
       expect(res).toEqual({ data: 'Mock data' });
       fetch.resetMocks();
@@ -63,7 +65,7 @@ describe('ApiService', () => {
     });
 
     it('should retry on error', async () => {
-      fetch.mockReject({status: 429});
+      fetch.mockReject({ status: 429 });
       const fetchSpy = jest.spyOn(ApiService.prototype, 'fetchJsonWithReject');
       try {
         await TestService.testFetchJsonWithReject('mockURL', {}, 0);

@@ -8,7 +8,6 @@ module.exports = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   testPathIgnorePatterns: ['<rootDir>/dist/'],
   coverageDirectory: './coverage/',
-  collectCoverage: true,
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
   coveragePathIgnorePatterns: [
     '.*\\.d\\.ts',

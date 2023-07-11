@@ -57,7 +57,7 @@ class CallbackService extends ApiService {
         if (callBackData) {
           const { numberToCall: destination, numberToCallFrom: callerId } = callBackData;
 
-          let outboundCallTaskAttributes = {
+          const outboundCallTaskAttributes = {
             ...task.attributes,
             taskType: 'callback-outbound',
             conversations: {
@@ -76,7 +76,7 @@ class CallbackService extends ApiService {
           });
 
           Analytics.track(Event.CALLBACK_STARTED, {
-            taskSid: task.taskSid
+            taskSid: task.taskSid,
           });
         }
       } catch (e) {
@@ -99,7 +99,7 @@ class CallbackService extends ApiService {
 
   async requeueCallback(task: Flex.ITask): Promise<Flex.ITask> {
     try {
-      let request: CreateCallbackRequest = {
+      const request: CreateCallbackRequest = {
         numberToCall: task.attributes.callBackData.numberToCall,
         numberToCallFrom: task.attributes.callBackData.numberToCallFrom,
         flexFlowSid: task.attributes.flow_execution_sid,
@@ -120,7 +120,7 @@ class CallbackService extends ApiService {
       };
 
       console.log('creating callback for reque');
-      let response = await this.createCallback(request);
+      const response = await this.createCallback(request);
 
       if (response.success) {
         await Flex.Actions.invokeAction('WrapupTask', { task });

@@ -4,7 +4,6 @@ import { TaskAttributes } from '../../types/task-router/Task';
 import PhoneCallbackIcon from '@material-ui/icons/PhoneCallback';
 
 export function createCallbackChannel(flex: typeof Flex, manager: Flex.Manager) {
-
   const channelDefinition = flex.DefaultTaskChannels.createDefaultTaskChannel(
     'callback',
     (task) => {
@@ -23,23 +22,23 @@ export function createCallbackChannel(flex: typeof Flex, manager: Flex.Manager) 
       ...templates,
       TaskListItem: {
         ...templates?.TaskListItem,
-        firstLine: (task: Flex.ITask) => `${task.queueName}: ${task.attributes.name}`
+        firstLine: (task: Flex.ITask) => `${task.queueName}: ${task.attributes.name}`,
       },
       TaskCanvasHeader: {
         ...templates?.TaskCanvasHeader,
-        title: (task: Flex.ITask) => `${task.queueName}: ${task.attributes.name}`
+        title: (task: Flex.ITask) => `${task.queueName}: ${task.attributes.name}`,
       },
       IncomingTaskCanvas: {
         ...templates?.IncomingTaskCanvas,
-        firstLine: (task: Flex.ITask) => task.queueName
-      }
+        firstLine: (task: Flex.ITask) => task.queueName,
+      },
     },
     icons: {
       active: <PhoneCallbackIcon key="active-callback-icon" />,
       list: <PhoneCallbackIcon key="list-callback-icon" />,
       main: <PhoneCallbackIcon key="main-callback-icon" />,
-    }
-  }
+    },
+  };
 
   // Register Channel
   flex.TaskChannels.register(CallbackChannel);
