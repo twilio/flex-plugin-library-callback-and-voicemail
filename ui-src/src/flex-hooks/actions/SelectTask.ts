@@ -10,7 +10,7 @@ export interface EventPayload {
 // when an outbound call back completes, select the parent task that initiated it
 export const autoSelectCallbackTaskWhenEndingCall = async (flex: typeof Flex, manager: Flex.Manager) => {
   try {
-    flex.Actions.addListener('beforeSelectTask', async (payload: EventPayload, abortFunction: () => void) => {
+    flex.Actions.addListener('beforeSelectTask', (payload: EventPayload, abortFunction: () => void) => {
       // when a reservation is removed from state, Flex runs SelectTask with task set to null
       // this means that when an outbound call back to a contact is completed (or canceled)
       // we need to catch that here in order to select the callback task
@@ -32,9 +32,12 @@ export const autoSelectCallbackTaskWhenEndingCall = async (flex: typeof Flex, ma
 
       // cancel this action and select the parent task instead
       abortFunction();
-      await flex.Actions.invokeAction('SelectTask', {
-        sid: parentTask,
-      });
+
+      (async () => {
+        await flex.Actions.invokeAction('SelectTask', {
+          sid: parentTask,
+        });
+      })();
     });
   } catch (e) {
     ErrorManager.createAndProcessError("Could not add 'beforeSelectTask' listener", {
