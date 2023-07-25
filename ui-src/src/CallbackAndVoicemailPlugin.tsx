@@ -25,7 +25,6 @@ export default class CallbackAndVoicemailPlugin extends FlexPlugin {
    * @param flex { typeof Flex }
    */
   async init(flex: typeof Flex, manager: Flex.Manager): Promise<void> {
-
     const initializers = [
       ConfigureFlexStrings,
       CustomizePasteElements,
@@ -34,7 +33,7 @@ export default class CallbackAndVoicemailPlugin extends FlexPlugin {
       Callback,
       AddReducers,
       createCallbackChannel,
-      createVoicemailChannel
+      createVoicemailChannel,
     ];
 
     initializers.forEach((initializer) => initializer(flex, manager));

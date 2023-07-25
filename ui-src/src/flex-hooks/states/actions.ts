@@ -7,35 +7,34 @@ import CallbackService from '../../service/CallbackService';
 // https://github.com/pburtchaell/redux-promise-middleware/blob/main/docs/guides/optimistic-updates.md
 
 class Actions {
-
   public static callCustomer = (task: Flex.ITask): Action => {
     return {
       type: INITIATE_CALLBACK,
       payload: {
         promise: CallbackService.callCustomerBack(task, 0),
-        data: task
-      }
+        data: task,
+      },
     };
   };
-  
+
   public static requeueCallback = (task: Flex.ITask): Action => {
     return {
       type: REQUEUE_CALLBACK,
       payload: {
         promise: CallbackService.requeueCallback(task),
-        data: task
-      }
+        data: task,
+      },
     };
   };
-  
+
   public static setLastPlacedCallback = (task?: Flex.ITask): Action => {
-    let payload = task ? task.sid : null;
-    
+    const payload = task ? task.sid : null;
+
     return {
       type: PLACED_CALLBACK,
-      payload
+      payload,
     };
   };
-};
+}
 
 export default Actions;

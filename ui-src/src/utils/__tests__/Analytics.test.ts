@@ -1,6 +1,5 @@
 import Analytics, { Method } from '../Analytics';
 
-
 describe('Analytics', () => {
   const mockCommonProperties = {
     accountSid: '',
