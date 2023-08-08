@@ -132,7 +132,27 @@ When you make changes to your code, the browser window will be automatically ref
 
 Once you are happy with your plugin, you have to deploy then release the plugin for it to take affect on Twilio hosted Flex.
 
-Run the following command to start the deployment:
+Rename `.env.example` at root of the project to `.env` , And fill the values as shown below:
+
+```
+TWILIO_FLEX_WORKSPACE_SID==<YOUR_WORKSPACE_SID>
+TWILIO_FLEX_CALLBACK_WORKFLOW_SID=<YOUR_FLEX_CALLBACK_WORKFLOW_SID>
+```
+
+Once the .env values are set, Start serverless deployment with below command at `root` of your project:
+
+```bash
+twilio serverless:deploy
+```
+Rename `.env.example` inside `ui-src` folder to `.env`.
+If the serverless deployment was successful, you must see the Domain url which ends with `.twil.io`.
+Copy the entire domain url and add that inside `.env` file of `ui-src` folder.
+
+```
+FLEX_APP_SERVERLESS_FUNCTONS_DOMAIN=<DOMAIN_URL>
+```
+
+Run the following command on `ui-src` folder to start the deployment:
 
 ```bash
 twilio flex:plugins:deploy --major --changelog "Notes for this version" --description "Functionality of the plugin"
@@ -143,6 +163,8 @@ After your deployment runs you will receive instructions for releasing your plug
 For more details on deploying your plugin, refer to the [deploying your plugin guide](https://www.twilio.com/docs/flex/plugins#deploying-your-plugin).
 
 Note: Common packages like `React`, `ReactDOM`, `Redux` and `ReactRedux` are not bundled with the build because they are treated as external dependencies so the plugin will depend on Flex to provide them globally.
+
+
 
 #### Twilio Serverless
 
