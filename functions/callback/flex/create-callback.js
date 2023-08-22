@@ -78,6 +78,7 @@ exports.handler = prepareFlexFunction(requiredParameters, async (context, event,
       timeout,
       attempts: 0,
     });
+    console.log(result);
     response.setStatusCode(result.status);
     response.setBody({ success: result.success, taskSid: result.taskSid });
     callback(null, response);
