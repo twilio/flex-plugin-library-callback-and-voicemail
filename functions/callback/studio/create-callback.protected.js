@@ -1,7 +1,5 @@
 const { prepareStudioFunction } = require(Runtime.getFunctions()["helpers/prepare-function"].path);
-const TaskOperations = require(Runtime.getFunctions()[
-  "twilio-wrappers/taskrouter"
-].path);
+const { TaskRouterUtils } = require('@twilio/flex-plugins-library-utils');
 
 const requiredParameters = [
   { key: "numberToCall", purpose: "the number of the customer to call" },
@@ -68,11 +66,13 @@ exports.handler = prepareStudioFunction(requiredParameters, async (context, even
       },
     };
     
+    const TaskOperations = new TaskRouterUtils(context.getTwilioClient(), {
+      ...process.env,
+    });
     const result = await TaskOperations.createTask({
-      context,
       workflowSid,
       taskChannel,
-      attributes,
+      attributes: JSON.stringify(attributes),
       priority,
       timeout,
       attempts: 0,
