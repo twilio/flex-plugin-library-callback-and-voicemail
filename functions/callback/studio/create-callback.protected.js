@@ -70,10 +70,9 @@ exports.handler = prepareStudioFunction(requiredParameters, async (context, even
       ...process.env,
     });
     const result = await TaskOperations.createTask({
-      context,
       workflowSid,
       taskChannel,
-      attributes,
+      attributes: JSON.stringify(attributes),
       priority,
       timeout,
       attempts: 0,
