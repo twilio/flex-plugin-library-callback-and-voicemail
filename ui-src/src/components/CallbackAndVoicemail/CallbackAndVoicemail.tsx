@@ -13,7 +13,7 @@ import { TaskAttributes } from '../../types/task-router/Task';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState, reduxNamespace } from '../../flex-hooks/states';
 import { Actions } from '../../flex-hooks/states';
-import Analytics, { Event } from '../../utils/Analytics';
+import { Analytics, Event } from '../../utils/Analytics';
 
 type CallbackAndVoicemailProps = {
   task: ITask;
