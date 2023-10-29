@@ -4,98 +4,85 @@ jest.mock('functions/helpers/prepare-function.private.js', () => ({
   __esModule: true,
   prepareFlexFunction: (_, fn) => fn,
 }));
+jest.mock('@twilio/flex-plugins-library-utils', () => ({
+  __esModule: true,
+  TaskRouterUtils: jest.fn(),
+}));
+
+import { TaskRouterUtils } from '@twilio/flex-plugins-library-utils';
 
 describe('Create callback', () => {
-    const getTaskrouterMockClient = function (createTask) {
-        const mockTaskrouterService = {
-            tasks: {
-                create: createTask,
-            }
-        };
-        return {
-            taskrouter: {
-                workspaces: (_workspaceSid) => mockTaskrouterService
-            }
-        };
+  const mockTaskSid = 'WTxxx';
+  const mockEvent = {
+    numberToCall: '+111',
+    numberToCallFrom: '+1222',
+    flexFlowSid: 'SIDxxx',
+    workflowSid: 'WWxxx',
+    timeout: 10,
+    priority: 1,
+    attempts: 1,
+    conversation_id: 'ID',
+    message: 'message',
+    utcDateTimeReceived: null,
+    RecordingSid: null,
+    RecordingUrl: null,
+    TranscriptionSid: null,
+    TranscriptionText: null,
+    isDeleted: false,
+    taskChannel: 'TCxxx',
+  };
+
+  beforeAll(() => {
+    helpers.setup();
+    global.Runtime._addFunction('helpers/prepare-function', './functions/helpers/prepare-function.private.js');
+    global.Runtime._addFunction('twilio-wrappers/taskrouter', './functions/twilio-wrappers/taskrouter.private.js');
+  });
+
+  it('createCallback is called successfully', async () => {
+    TaskRouterUtils.mockImplementation((value) => {
+      return {
+        createTask: jest.fn(() =>
+          Promise.resolve({
+            status: 200,
+            task: {
+              sid: mockTaskSid,
+              attributes: '{}',
+            },
+            success: true,
+          }),
+        ),
+      };
+    });
+    const createCallback = require('../../../../functions/callback/flex/create-callback');
+
+    const handlerFn = createCallback.handler;
+    const mockContext = {
+      getTwilioClient: () => () => jest.fn(),
     };
-
-    const mockTaskSid = "WTxxx";
-    const mockTask = {
-        sid: mockTaskSid,
-        attributes: '{"taskType": "callback"}',
-    };
-
-    const mockEvent = {
-        numberToCall: "+111",
-        numberToCallFrom: "+1222",
-        flexFlowSid: "SIDxxx",
-        workflowSid: "WWxxx",
-        timeout: 10,
-        priority: 1,
-        attempts: 1,
-        conversation_id: "ID",
-        message: "message",
-        utcDateTimeReceived: null,
-        RecordingSid: null,
-        RecordingUrl: null,
-        TranscriptionSid: null,
-        TranscriptionText: null,
-        isDeleted: false,
-        taskChannel: "TCxxx"
-    };
-
-    const createTaskMock = jest.fn(() => Promise.resolve(mockTask));
-
-    beforeAll(() => {
-        helpers.setup();
-        global.Runtime._addFunction(
-            'helpers/prepare-function',
-            './functions/helpers/prepare-function.private.js',
-        );
-        global.Runtime._addFunction(
-            'helpers/parameter-validator',
-            './functions/helpers/parameter-validator.private.js',
-        );
-        global.Runtime._addFunction(
-            'twilio-wrappers/taskrouter',
-            './functions/twilio-wrappers/taskrouter.private.js',
-        );
-        global.Runtime._addFunction(
-            'twilio-wrappers/retry-handler',
-            './functions/twilio-wrappers/retry-handler.private.js',
-        );
+    const mockResponse = new Twilio.Response();
+    const mockErrorObject = jest.fn((err) => {
+      throw err;
     });
 
-    it('createCallback is called successfully', async () => {
-        const createCallback = require('../../../../functions/callback/flex/create-callback');
+    const mockCallbackObject = (_err, response) => {
+      expect(response).toBeInstanceOf(Twilio.Response);
+      expect(response._statusCode).toEqual(200);
+      expect(response._body.taskSid).toEqual(mockTaskSid);
+    };
 
-        const handlerFn = createCallback.handler;
-        const mockContext = {
-            PATH: 'mockPath',
-            getTwilioClient: () => getTaskrouterMockClient(createTaskMock)
-        };
-        const mockResponse = new Twilio.Response();
-        const mockErrorObject = jest.fn((err) => { throw err; });
+    await handlerFn(mockContext, mockEvent, mockCallbackObject, mockResponse, mockErrorObject);
+  });
 
-        const mockCallbackObject = (_err, response) => {
-            expect(response).toBeInstanceOf(Twilio.Response);
-            expect(response._statusCode).toEqual(200);
-            expect(response._body.taskSid).toEqual(mockTaskSid);
-        };
+  it('createCallback error handler is called', async () => {
+    const createCallback = require('../../../../functions/callback/flex/create-callback');
+    const handlerFn = createCallback.handler;
 
-        await handlerFn(mockContext, mockEvent, mockCallbackObject, mockResponse, mockErrorObject);
-    });
+    const mockResponse = new Twilio.Response();
+    const mockCallbackObject = jest.fn();
+    const mockErrorObject = jest.fn();
 
-    it('createCallback error handler is called', async () => {
-        const createCallback = require('../../../../functions/callback/flex/create-callback');
-        const handlerFn = createCallback.handler;
+    await handlerFn({}, mockEvent, mockCallbackObject, mockResponse, mockErrorObject);
 
-        const mockResponse = new Twilio.Response();
-        const mockCallbackObject = jest.fn();
-        const mockErrorObject = jest.fn();
-
-        await handlerFn({}, mockEvent, mockCallbackObject, mockResponse, mockErrorObject);
-
-        expect(mockErrorObject).toHaveBeenCalledTimes(1);
-    });
+    expect(mockErrorObject).toHaveBeenCalledTimes(1);
+  });
 });

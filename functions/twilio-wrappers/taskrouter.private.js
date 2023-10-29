@@ -1,8 +1,4 @@
-const { isString, isObject, isNumber } = require("lodash");
-
-const retryHandler = require(Runtime.getFunctions()[
-  "twilio-wrappers/retry-handler"
-].path).retryHandler;
+import { TaskRouterUtils } from '@twilio/flex-plugins-library-utils';
 
 /**
  * @param {object} parameters the parameters for the function
@@ -17,53 +13,33 @@ const retryHandler = require(Runtime.getFunctions()[
  * @description creates a task
  */
 exports.createTask = async function createTask(parameters) {
-  const {
-    context,
+  const { context, workflowSid, taskChannel, attributes, priority, timeout, attempts } = parameters;
+
+  const config = {
+    attempts: attempts || 3,
     workflowSid,
     taskChannel,
     attributes,
-    priority: overriddenPriority,
-    timeout: overriddenTimeout,
-    attempts,
-  } = parameters;
+    priority,
+    timeout,
+  };
 
-  if (!isNumber(attempts))
-    throw "Invalid parameters object passed. Parameters must contain the number of attempts";
-  if (!isObject(context))
-    throw "Invalid parameters object passed. Parameters must contain context object";
-  if (!isString(workflowSid) || workflowSid.length == 0)
-    throw "Invalid parameters object passed. Parameters must contain workflowSid string";
-  if (!isString(taskChannel) || taskChannel.length == 0)
-    throw "Invalid parameters object passed. Parameters must contain taskChannel string";
-  if (!isObject(attributes))
-    throw "Invalid parameters object passed. Parameters must contain attributes object";
-
-  const timeout = overriddenTimeout || 86400;
-  const priority = overriddenPriority || 0;
+  const client = context.getTwilioClient();
+  const taskRouterClient = new TaskRouterUtils(client, config);
 
   try {
-    const client = context.getTwilioClient();
-    const task = await client.taskrouter
-        .workspaces(process.env.TWILIO_FLEX_WORKSPACE_SID)
-      .tasks.create({
-        attributes: JSON.stringify(attributes),
-        workflowSid,
-        taskChannel,
-        priority,
-        timeout,
-      });
-    
+    const task = await taskRouterClient.createTask(config);
+
     return {
-      success: true,
-      taskSid: task.sid,
+      success: task.success,
+      taskSid: task.task.sid,
       task: {
-        ...task,
-        attributes: JSON.parse(task.attributes),
+        ...task.task,
+        attributes: JSON.parse(task.task.attributes),
       },
-      status: 200,
+      status: task.status,
     };
   } catch (error) {
-
-    return retryHandler(error, parameters, arguments.callee);
+    return { success: false, status: error.status, message: error.message };
   }
 };
