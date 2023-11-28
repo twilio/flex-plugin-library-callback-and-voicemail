@@ -68,6 +68,7 @@ export function callbackandvoicemail(state = initialState, action: Action): Call
       return state;
     }
   }
+  return state;
 }
 
 export default callbackandvoicemail;
