@@ -47,9 +47,6 @@ Plugin is ready to use once it is installed and the browser window is refreshed.
 
 ## Installation
 
-During installation, 2 fields are required:
+During installation, 1 field is required:
 
-1. _TaskRouter Workspace SID_: This is the SID of the "Flex Task Assignment" workspace that you see in [Twilio Console > TaskRouter > Workspaces](https://console.twilio.com/us1/develop/taskrouter/workspaces). Please refer to the screenshot below.
-   ![Workspace SID](https://raw.githubusercontent.com/twilio/flex-plugin-library-callback-and-voicemail/main/screenshots/workspace_sid.png)
-
-2. _TaskRouter Callback Workflow SID_: You may want to create a new TaskRouter workflow for callback or use the default workflow in [Twilio Console > TaskRouter > Workspaces > Flex Task Assignment](https://console.twilio.com/us1/develop/taskrouter/workspaces) > Workflows > Assign to Anyone and get its SID.
+1. _TaskRouter Callback Workflow SID_: You may want to create a new TaskRouter workflow for callback or use the default workflow in [Twilio Console > TaskRouter > Workspaces > Flex Task Assignment](https://console.twilio.com/us1/develop/taskrouter/workspaces) > Workflows > Assign to Anyone and chose its SID.
