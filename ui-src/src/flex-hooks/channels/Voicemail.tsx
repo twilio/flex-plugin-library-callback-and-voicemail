@@ -1,7 +1,8 @@
 import * as Flex from '@twilio/flex-ui';
 import React from 'react';
 import { TaskAttributes } from '../../types/task-router/Task';
-import VoicemailIcon from '@material-ui/icons/Voicemail';
+import { VoicemailIcon } from '@twilio-paste/icons/esm/VoicemailIcon';
+import { StringTemplates } from '../strings/Callback';
 
 export function createVoicemailChannel(flex: typeof Flex, manager: Flex.Manager) {
   const channelDefinition = flex.DefaultTaskChannels.createDefaultTaskChannel(
@@ -15,6 +16,13 @@ export function createVoicemailChannel(flex: typeof Flex, manager: Flex.Manager)
     'deepskyblue',
   );
 
+  const getTaskName = (task: Flex.ITask, queue: boolean): string => {
+    if (queue) {
+      return `${task.queueName}: ${(manager.strings as any)[StringTemplates.Voicemail]} (${task.attributes.name})`;
+    }
+    return `${(manager.strings as any)[StringTemplates.Voicemail]} (${task.attributes.name})`;
+  };
+
   const { templates } = channelDefinition;
   const VoicemailChannel: Flex.TaskChannelDefinition = {
     ...channelDefinition,
@@ -22,21 +30,36 @@ export function createVoicemailChannel(flex: typeof Flex, manager: Flex.Manager)
       ...templates,
       TaskListItem: {
         ...templates?.TaskListItem,
-        firstLine: (task: Flex.ITask) => `${task.queueName}: ${task.attributes.name}`,
+        firstLine: (task: Flex.ITask) => getTaskName(task, true),
       },
       TaskCanvasHeader: {
         ...templates?.TaskCanvasHeader,
-        title: (task: Flex.ITask) => `${task.queueName}: ${task.attributes.name}`,
+        title: (task: Flex.ITask) => getTaskName(task, true),
       },
       IncomingTaskCanvas: {
         ...templates?.IncomingTaskCanvas,
-        firstLine: (task: Flex.ITask) => task.queueName,
+        firstLine: (task: Flex.ITask) => getTaskName(task, true),
+      },
+      TaskCard: {
+        ...templates?.TaskCard,
+        firstLine: (task: Flex.ITask) => getTaskName(task, false),
+      },
+      Supervisor: {
+        ...templates?.Supervisor,
+        TaskCanvasHeader: {
+          ...templates?.Supervisor?.TaskCanvasHeader,
+          title: (task: Flex.ITask) => getTaskName(task, false),
+        },
+        TaskOverviewCanvas: {
+          ...templates?.Supervisor?.TaskOverviewCanvas,
+          firstLine: (task: Flex.ITask) => getTaskName(task, true),
+        },
       },
     },
     icons: {
-      active: <VoicemailIcon key="active-voicemail-icon" />,
-      list: <VoicemailIcon key="list-voicemail-icon" />,
-      main: <VoicemailIcon key="main-voicemail-icon" />,
+      active: <VoicemailIcon element="C_AND_V_ICON" decorative={true} key="active-voicemail-icon" />,
+      list: <VoicemailIcon element="C_AND_V_ICON" decorative={true} key="list-voicemail-icon" />,
+      main: <VoicemailIcon element="C_AND_V_ICON" decorative={true} key="main-voicemail-icon" />,
     },
   };
 

@@ -1,4 +1,4 @@
-import { ITask, useFlexSelector, Manager } from '@twilio/flex-ui';
+import { ITask, useFlexSelector, Manager, Template, templates } from '@twilio/flex-ui';
 import { Button } from '@twilio-paste/core/button';
 import { Box } from '@twilio-paste/core/box';
 import { Heading } from '@twilio-paste/core/heading';
@@ -6,21 +6,25 @@ import { Text } from '@twilio-paste/core/text';
 import { Flex as Flex } from '@twilio-paste/core';
 import { InformationIcon } from '@twilio-paste/icons/cjs/InformationIcon';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DateTime } from 'luxon';
 import { TaskAttributes } from '../../types/task-router/Task';
-
+import { Stack } from '@twilio-paste/core/stack';
+import { HelpText } from '@twilio-paste/core/help-text';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState, reduxNamespace } from '../../flex-hooks/states';
 import { Actions } from '../../flex-hooks/states';
 import { Analytics, Event } from '../../utils/Analytics';
+import { StringTemplates } from '../../flex-hooks/strings/Callback';
+import CallbackService, { FetchVoicemailResponse } from '../../service/CallbackService';
 
 type CallbackAndVoicemailProps = {
   task: ITask;
+  allowRequeue: boolean;
   maxAttempts: number;
 };
 
-export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemailProps) => {
+export const CallbackAndVoicemail = ({ task, allowRequeue, maxAttempts }: CallbackAndVoicemailProps) => {
   const dispatch = useDispatch();
 
   const { isCompletingCallbackAction, isRequeueingCallbackAction } = useSelector(
@@ -54,59 +58,101 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
   } as Intl.DateTimeFormatOptions;
 
   const localTimeShort = timeReceived.toLocaleString({ ...formatOptions, timeZone: localTz });
-  const serverTimeShort =
-    'System time: ' +
-    timeReceived.toLocaleString({ ...formatOptions, timeZone: callBackData?.mainTimeZone || localTz });
+  const serverTimeShort = timeReceived.toLocaleString({
+    ...formatOptions,
+    timeZone: callBackData?.mainTimeZone || localTz,
+  });
   const disableRetryButton =
     taskStatus !== 'assigned' || isCompletingCallbackAction[task.taskSid] || isRequeueingCallbackAction[task.taskSid];
   const disableCallCustomerButton = disableRetryButton || workerOffline(workerActivitySid);
   const thisAttempt = callBackData?.attempts ? Number(callBackData.attempts) + 1 : 1;
 
+  const [recordingSid, setRecordingSid] = useState('');
+  const [voicemail, setVoicemail] = useState(null as FetchVoicemailResponse | null);
+  const [voicemailError, setVoicemailError] = useState(false);
+
+  const fetchVoicemail = async () => {
+    setVoicemail(null);
+    setVoicemailError(false);
+    if (callBackData?.RecordingSid && !callBackData.isDeleted) {
+      try {
+        const voicemailResponse = await CallbackService.fetchVoicemail(callBackData.RecordingSid);
+        setVoicemail(voicemailResponse);
+      } catch {
+        setVoicemailError(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (callBackData?.RecordingSid && !callBackData.isDeleted && callBackData?.RecordingSid !== recordingSid) {
+      setRecordingSid(callBackData.RecordingSid);
+      fetchVoicemail();
+    }
+  }, [callBackData]);
+
   return (
     <>
       <Flex vertical>
-        {taskType == 'callback' && (
+        {taskType === 'callback' && (
           <Box element="C_AND_V_CONTENT_BOX">
             <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-              Callback Request
-            </Heading>
-            <Text as="span">A contact has requested an immediate callback.</Text>
-          </Box>
-        )}
-
-        {taskType == 'voicemail' && (
-          <Box element="C_AND_V_CONTENT_BOX">
-            <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-              Contact Voicemail
-            </Heading>
-            <Text as="span">A contact has left a voicemail that requires attention.</Text>
-          </Box>
-        )}
-
-        {callBackData.RecordingUrl && !callBackData.isDeleted && (
-          <Box element="C_AND_V_CONTENT_BOX">
-            <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-              Voicemail recording
+              <Template source={templates[StringTemplates.CallbackRequestHeading]} />
             </Heading>
             <Text as="span">
+              <Template source={templates[StringTemplates.CallbackRequestDescription]} />
+            </Text>
+          </Box>
+        )}
+
+        {taskType === 'voicemail' && (
+          <Box element="C_AND_V_CONTENT_BOX">
+            <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
+              <Template source={templates[StringTemplates.VoicemailRequestHeading]} />
+            </Heading>
+            <Text as="span">
+              <Template source={templates[StringTemplates.VoicemailRequestDescription]} />
+            </Text>
+          </Box>
+        )}
+
+        {callBackData?.RecordingSid && !callBackData.isDeleted && (
+          <Box element="C_AND_V_CONTENT_BOX">
+            <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
+              <Template source={templates[StringTemplates.VoicemailRecording]} />
+            </Heading>
+            {voicemail ? (
               <audio
                 onPlay={() => {
                   Analytics.track(Event.VOICEMAIL_PLAYED, {
                     taskSid: task.taskSid,
                   });
                 }}
-                src={callBackData.RecordingUrl}
+                src={`data:${voicemail.type};base64,${voicemail.recording}`}
                 controls
                 data-testid="voicemailRecording"
               />
-            </Text>
+            ) : voicemailError ? (
+              <Stack orientation="horizontal" spacing="space30">
+                <HelpText variant="error" marginTop="space0">
+                  <Template source={templates[StringTemplates.VoicemailError]} />
+                </HelpText>
+                <Button variant="secondary" size="small" onClick={async () => fetchVoicemail()}>
+                  <Template source={templates[StringTemplates.VoicemailTryAgain]} />
+                </Button>
+              </Stack>
+            ) : (
+              <Text as="span">
+                <Template source={templates[StringTemplates.VoicemailLoading]} />
+              </Text>
+            )}
           </Box>
         )}
 
         {callBackData.TranscriptionText && !callBackData.isDeleted && (
           <Box element="C_AND_V_CONTENT_BOX">
             <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-              Voicemail transcript
+              <Template source={templates[StringTemplates.VoicemailTranscript]} />
             </Heading>
             <Text as="span">{callBackData.TranscriptionText}</Text>
           </Box>
@@ -114,14 +160,14 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
 
         <Box element="C_AND_V_CONTENT_BOX">
           <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-            Contact phone
+            <Template source={templates[StringTemplates.ContactPhone]} />
           </Heading>
           <Text as="span">{callBackData?.numberToCall}</Text>
         </Box>
 
         <Box element="C_AND_V_CONTENT_BOX">
           <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-            Call reception time
+            <Template source={templates[StringTemplates.CallReceptionTime]} />
           </Heading>
           <Flex vAlignContent="center">
             <Flex>
@@ -129,20 +175,31 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
             </Flex>
             <Flex grow>
               <Box paddingLeft="space10">
-                <InformationIcon decorative={false} title={serverTimeShort} />
+                <InformationIcon
+                  decorative={false}
+                  title={templates[StringTemplates.SystemTime]({
+                    systemTime: serverTimeShort,
+                  })}
+                />
               </Box>
             </Flex>
           </Flex>
         </Box>
 
-        <Box element="C_AND_V_CONTENT_BOX">
-          <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
-            Callback attempt
-          </Heading>
-          <Text as="span">
-            {thisAttempt} of {maxAttempts}
-          </Text>
-        </Box>
+        {allowRequeue && (
+          <Box element="C_AND_V_CONTENT_BOX">
+            <Heading element="C_AND_V_CONTENT_HEADING" as="h4" variant="heading40">
+              <Template source={templates[StringTemplates.CallbackAttemptHeading]} />
+            </Heading>
+            <Text as="span">
+              <Template
+                source={templates[StringTemplates.CallbackAttempts]}
+                thisAttempt={thisAttempt}
+                maxAttempts={maxAttempts}
+              />
+            </Text>
+          </Box>
+        )}
       </Flex>
 
       <Box element="C_AND_V_BUTTON_BOX">
@@ -153,11 +210,11 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
           onClick={() => dispatch(Actions.callCustomer(task))}
           data-testid="callbackBtn"
         >
-          Place Call Now To {callBackData?.numberToCall}
+          <Template source={templates[StringTemplates.PlaceCallNow]} phoneNumber={callBackData?.numberToCall} />
         </Button>
       </Box>
 
-      {thisAttempt < maxAttempts && (
+      {allowRequeue && thisAttempt < maxAttempts && (
         <Box element="C_AND_V_BUTTON_BOX">
           <Button
             fullWidth
@@ -166,7 +223,7 @@ export const CallbackAndVoicemail = ({ task, maxAttempts }: CallbackAndVoicemail
             onClick={async () => dispatch(Actions.requeueCallback(task))}
             data-testid="retryBtn"
           >
-            Retry Later
+            <Template source={templates[StringTemplates.RetryLater]} />
           </Button>
         </Box>
       )}

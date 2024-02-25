@@ -7,10 +7,6 @@ const requiredParameters = [
     key: 'numberToCallFrom',
     purpose: 'the number to call the customer from',
   },
-  {
-    key: 'flexFlowSid',
-    purpose: 'the SID of the Flex Flow that triggered this function',
-  },
 ];
 
 exports.handler = prepareFlexFunction(requiredParameters, async (context, event, callback, response, handleError) => {

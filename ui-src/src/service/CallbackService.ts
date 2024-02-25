@@ -1,17 +1,22 @@
 import * as Flex from '@twilio/flex-ui';
 import ApiService from './ApiService';
-import { ErrorManager, FlexErrorSeverity, FlexPluginErrorType } from '../utils/ErrorManager';
+import { ErrorManager, FlexPluginErrorType } from '../utils/ErrorManager';
 import { EncodedParams } from '../types/serverless';
 import { TaskAttributes } from '../types/task-router/Task';
 import { CallbackNotification } from '../flex-hooks/notifications/Callback';
 import { Actions } from '../flex-hooks/states';
-import {Analytics, Event } from '../utils/Analytics';
+import { Analytics, Event } from '../utils/Analytics';
 
 export interface CreateCallbackResponse {
   success: boolean;
   taskSid: string;
   data: string;
   message: string;
+}
+
+export interface FetchVoicemailResponse {
+  type: string;
+  recording: string;
 }
 
 export interface CreateCallbackRequest {
@@ -33,6 +38,10 @@ export interface CreateCallbackRequest {
 }
 
 class CallbackService extends ApiService {
+  async fetchVoicemail(recordingSid: string): Promise<FetchVoicemailResponse> {
+    return this.fetchVoicemailRecording(recordingSid);
+  }
+
   async callCustomerBack(task: Flex.ITask, attempts: number): Promise<Flex.ITask> {
     // Check to see if outbound dialing is enabled on the account
     // as outbound calls won't work unless it is
@@ -166,6 +175,19 @@ class CallbackService extends ApiService {
       },
     );
     return response;
+  }
+
+  async fetchVoicemailRecording(recordingSid: string): Promise<FetchVoicemailResponse> {
+    const encodedParams: EncodedParams = {
+      Token: encodeURIComponent(this.manager.user.token),
+      recordingSid: encodeURIComponent(recordingSid),
+    };
+
+    return this.fetchJsonWithReject<FetchVoicemailResponse>(`${this.serverlessDomain}/callback/flex/fetch-voicemail`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: this.buildBody(encodedParams),
+    });
   }
 }
 

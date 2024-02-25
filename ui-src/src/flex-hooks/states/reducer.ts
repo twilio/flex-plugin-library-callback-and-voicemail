@@ -16,10 +16,7 @@ export function callbackandvoicemail(state = initialState, action: Action): Call
       };
     }
 
-    case `${INITIATE_CALLBACK}_REJECTED`: {
-      break;
-    }
-
+    case `${INITIATE_CALLBACK}_REJECTED`:
     case `${INITIATE_CALLBACK}_FULFILLED`: {
       const { taskSid } = action.payload as Flex.ITask;
       const isCompletingCallbackAction = { ...state.isCompletingCallbackAction };
@@ -42,10 +39,7 @@ export function callbackandvoicemail(state = initialState, action: Action): Call
       };
     }
 
-    case `${REQUEUE_CALLBACK}_REJECTED`: {
-      break;
-    }
-
+    case `${REQUEUE_CALLBACK}_REJECTED`:
     case `${REQUEUE_CALLBACK}_FULFILLED`: {
       const { taskSid } = action.payload as Flex.ITask;
       const isRequeueingCallbackAction = { ...state.isRequeueingCallbackAction };
@@ -68,7 +62,6 @@ export function callbackandvoicemail(state = initialState, action: Action): Call
       return state;
     }
   }
-  return state;
 }
 
 export default callbackandvoicemail;

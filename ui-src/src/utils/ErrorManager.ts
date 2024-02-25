@@ -57,7 +57,7 @@ class ErrorManagerImpl {
         flexManager.reportErrorEvent(pluginError);
       }
       if (showNotification) {
-        Flex.Notifications.showNotification(CallbackNotification.ErrorCallBackAndVoicemail, {
+        Flex.Notifications.showNotification(CallbackNotification.ErrorCallingCustomer, {
           error: error,
         });
       }

@@ -1,3 +1,9 @@
+## version 1.0.2
+
+- Introduced the _waitexperience_ logic.
+- Voicemail retrieval now works with recording media HTTP authentication enabled or disabled.
+- In-queue callback and voicemail requests keep their place in line by using the original task's start time for the callback request
+
 ## version 1.0.1
 
 - Introduced the usage of flex-ui-telemetry package instead of individual classes.

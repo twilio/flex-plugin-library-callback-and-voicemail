@@ -1,6 +1,6 @@
 {
   "name": "plibo-queued-callback-and-voicemail",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "id": "plibo-queued-callback-and-voicemail",
   "private": true,
   "scripts": {
