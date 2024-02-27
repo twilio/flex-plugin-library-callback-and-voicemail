@@ -60,8 +60,7 @@ function getOptions(context) {
         context.RECORD_VOICEMAIL_PROMPT ||
         'Please leave a message at the tone. When you are finished recording, you may hang up, or press the star key.',
       voicemailNotCaptured: context.VOICEMAIL_NOT_CAPTURED_MESSAGE || "Sorry. We weren't able to capture your message.",
-      voicemailRecorded:
-        context.CALLBACK_OR_VOICEMAIL_CHOICE || 'Your voicemail has been successfully recorded... Goodbye',
+      voicemailRecorded: context.VOICEMAIL_RECORDED || 'Your voicemail has been successfully recorded... Goodbye',
       callbackAndVoicemailUnavailable:
         context.CALLBACK_AND_VOICEMAIL_NOT_AVAILABLE_MESSAGE ||
         'The option to request a callback or leave a voicemail is not available at this time. Please continue to hold.',
